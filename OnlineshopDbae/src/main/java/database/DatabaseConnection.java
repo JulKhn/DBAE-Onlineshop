@@ -12,9 +12,9 @@ public class DatabaseConnection {
 	
 	protected static Connection con;
 	private static final String DB_SERVER = "207.154.234.136:5432";
-	private static final String DB_NAME = "2022-Onlineverkaufsplattform";
-	private static final String DB_USER = "2022-Onlineverkaufsplattform";
-	private static final String DB_PASSWORD = "92469e6581f76c6bdbee6d73e93a0409";
+	private static final String DB_NAME = "DBAE-Gruppe-32";
+	private static final String DB_USER = "DBAE-Gruppe-32";
+	private static final String DB_PASSWORD = "310dcbbf4cce62f762a2aaa148d556bd";
 	private static final String DB_DRIVER = "org.postgresql.Driver";
 	private static final String DB_URL = "jdbc:postgresql://" + DB_SERVER + "/" + DB_NAME;
 
