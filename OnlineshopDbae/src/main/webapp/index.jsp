@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Hauptmenu</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<header>ShopIt</header>
+<%@ include file="navbar.jsp" %>
+<header>ShopHIt</header>
 <div align="center">
 	<form method="POST" action="LoginServlet">
 		<h2>Login <br />
