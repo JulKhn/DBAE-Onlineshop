@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Hauptmenu</title>
+<title>Hauptmenu - ShopHIt</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>

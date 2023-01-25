@@ -22,7 +22,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-  		<a class="navbar-brand" href="index.jsp">Hibay</a>
+  		<a class="navbar-brand" href="index.jsp">ShopHIt</a>
   		</div>
   		<!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -50,21 +50,20 @@
 	        	<span class="icon-bar"></span>
 	        	<span class="icon-bar"></span>
 	      		</button>
-  				<a class="navbar-brand" href="index.jsp">Hibay</a>
+  				<a class="navbar-brand" href="index.jsp">ShopHIt</a>
   			</div>
   		<!-- Collect the nav links, forms, and other content for toggling -->
 	    	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li class="active"><a href="#">Bitte einloggen oder registrieren!<span class="sr-only">(current)</span></a></li>
-	      	<li class="active"><a href="index.jsp">Startseite<span class="sr-only">(current)</span></a></li>
+	      	<li class="active"><a href="index.jsp">Login<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="registrierung.jsp">Registrierung<span class="sr-only">(current)</span></a></li>
-	        <li class="active"><a href="login.jsp">Login<span class="sr-only">(current)</span></a></li>
+	        <li class="active"><a href="#">Über uns<span class="sr-only">(current)</span></a></li>
     	 </ul>
   		</div>
   		</div><!-- /.navbar-collapse -->
 	</nav>
 	<c:if test="${not loginbool}">
-		<div class="blue">Bitte registrieren Sie sich oder loggen Sie sich ein!</div>
 	</c:if>
 	</c:otherwise>
 </c:choose>

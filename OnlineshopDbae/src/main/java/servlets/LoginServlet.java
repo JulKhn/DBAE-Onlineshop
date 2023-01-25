@@ -1,6 +1,11 @@
 package servlets;
+import database.KontoDatabase;
+import database.ProduktDatabase;
 import database.DatabaseConnection;
 import data.Konto;
+import data.Produkt;
+import data.Ware;
+import data.Warenkorb;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -33,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 	private boolean loginbool = false;
 	Boolean leer = true;
 	Boolean aufladen = false;
-	private static Connection con = null;
+	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -55,33 +60,13 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("leer", leer);
 		session.setAttribute("aufladen", aufladen);
 		
+		Konto konto = KontoDatabase.getKonto(email);
+		session.setAttribute("konto", konto);
 		
-		try {
-			
-			//E-Mail mit den E-Mails in der Datenbank abgleichen
-			con = DatabaseConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM benutzer WHERE email = '" +  email + "'");
-			ResultSet resultsetKonto = pstmt.executeQuery();
-			
-			//counter um zu pruefen ob wirklich ein Benutzer erstellt wurde
-			int counter = 0;
-			Konto konto = null;
-			
-			//benutzerid wird fuer die Abfrage des Passwortes benoetigt und bei der Benutzererstellung initialisiert
-			int kontoid = 0;
-			
-			//Benutzer erstellen
-			while (resultsetKonto.next()) {
-				counter++;
-				konto = new Konto(resultsetKonto.getString("vorname"), resultsetKonto.getString("nachname"), resultsetKonto.getString("email"), 
-						resultsetKonto.getString("geburtsdatum"), null, resultsetKonto.getString("iban"), resultsetKonto.getDouble("kontostand"));
-				kontoid = resultsetKonto.getInt("benutzerid");
-				session.setAttribute("benutzerid", kontoid);
-				request.setAttribute("benutzerid", kontoid);
-			}
-			
-			
-			if (counter != 0) {
+		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu(konto.getId());
+		session.setAttribute("prodListe", prodListe);
+		
+			if (konto.getId() != 0) {
 				
 				/**
 				 * da alle Passwoerter in der Datenbank verschluesselt sind muss auch das angegebene Passwort verschluesselt werden, 
@@ -90,36 +75,24 @@ public class LoginServlet extends HttpServlet {
 				byte[] passwortbyte = passwort.getBytes();
 				passwortbyte = Base64.getEncoder().encode(passwortbyte);
 				String passwortencoded = new String(passwortbyte);
-
-				
-				//Passwort und BenutzerID aus der DB mit Eingabe abgleichen
-				PreparedStatement pstmt2 = con.prepareStatement("SELECT * FROM passwort WHERE passwort = '" +  passwortencoded + "' AND benutzerid = " + kontoid);
-				ResultSet resultsetPW = pstmt2.executeQuery();
-				
-				//counter fuer die Bestaetigung, dass dem Benutzer das Passwort zugewiesen wurde.
-				counter = 0;
-				
-				//dem Benutzerobjekt wird das Passwort hinzugefuegt
-				while (resultsetPW.next()) {
-					counter++;
-					konto.setPasswort(resultsetPW.getString("passwort"));
-				}
 				
 				/**
-				 * Benutzer per expression language begruessen, loginbool fuer die Navbar auf true setzen,
-				 * Benutzerobjekt in der Session speichern und den Warenkorb fuer die Session erstellen
+				 * Konto per expression language begruessen, loginbool fuer die Navbar auf true setzen,
+				 * Kontoobjekt in der Session speichern und den Warenkorb fuer die Session erstellen
 				 */
-				if (counter != 0) {
-					
+				if (KontoDatabase.kontoPasswort(konto, passwortencoded)) {
 					request.setAttribute("erfolg", "Willkommen, " + konto.getVorname() + " " + konto.getNachname() + "!");
-					session.setAttribute("benutzer", konto);
-					session.getAttribute("benutzer");
+					session.setAttribute("konto", konto);
+					session.getAttribute("konto");
 					
+					ArrayList<Ware> warenKorb = new ArrayList<Ware>();
+					session.setAttribute("warenKorb", warenKorb);
 					
-					weiterleitung = "menu.jsp";
+					weiterleitung = "index.jsp";
 					loginbool = true;
+					Warenkorb warenkorb = new Warenkorb();
+					session.setAttribute("Warenkorb", warenkorb);
 					session.setAttribute("loginbool", loginbool);
-					
 				} else {
 					request.setAttribute("error", "Die Kombination aus E-Mail/Passwort ist nicht vorhanden."); 
 					loginbool = false;
@@ -131,13 +104,10 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("loginbool", loginbool);
 			}
 
+			
 		
-		} catch (NullPointerException npe) {
-			request.setAttribute("error", "Es ist ein Fehler aufgetreten. Haben Sie sich bereits registriert?"); 
-		} catch (SQLException e) {
-			System.out.println("Fehler: Sind Sie bereits eingeloggt? ");
-			e.printStackTrace();
-		}
+		
 		request.getRequestDispatcher(weiterleitung).forward(request, response);
 	}
 }
+

@@ -15,6 +15,7 @@ public class Konto {
 	private String passwort;
 	private String iban;
 	private double kontostand;
+	private int id;
 	
 	/**
 	 * Konstruktor fuer den Benutzer
@@ -27,7 +28,8 @@ public class Konto {
 	 * @param iban
 	 * @param kontostand
 	 */
-	public Konto(String vorname, String nachname, String email, String geburtsdatum, String passwort, String iban, double kontostand) {
+	public Konto(String vorname, String nachname, String email, String geburtsdatum, 
+			String passwort, String iban, double kontostand) {
 		this.vorname = vorname;
 		this.nachname = nachname;
 		this.email = email;
@@ -71,6 +73,14 @@ public class Konto {
 	
 	public void setKontostand(double kontostand) {
 		this.kontostand = kontostand;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 }
