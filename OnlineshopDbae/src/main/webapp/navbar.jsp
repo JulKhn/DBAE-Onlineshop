@@ -9,8 +9,8 @@
 <title>Navbar</title>
 </head>
 <body>
-<!-- Ist der Benutzer eingeloggt, so sieht er diese Navbar -->
-<!-- Ist der Benutzer noch nicht eingeloggt, so erhaelt er einen Hinweis fuer die Registrierung oder den Login  -->
+<!-- Ist der Konto eingeloggt, so sieht er diese Navbar -->
+<!-- Ist der Konto noch nicht eingeloggt, so erhaelt er einen Hinweis fuer die Registrierung oder den Login  -->
 <c:choose>
 	<c:when test="${loginbool}">
 	<nav class="navbar navbar-default">
@@ -27,10 +27,11 @@
   		<!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="#">Hallo, ${benutzer.vorname} ${benutzer.nachname}!<span class="sr-only">(current)</span></a></li>
+	        <li class="active"><a href="#">Hallo, ${konto.vorname} ${konto.nachname}!<span class="sr-only">(current)</span></a></li>
 	      	<li class="active"><a href="meinKonto.jsp">Mein Konto<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="menu.jsp">Menü<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="warenkorb.jsp">Warenkorb<span class="sr-only">(current)</span></a></li>
+	        <li class="active"><a href="#">Über uns<span class="sr-only">(current)</span></a></li>
     	 </ul>
     	  <form method="POST" action="LogoutServlet">
 		  <input type="submit" value="Logout!">

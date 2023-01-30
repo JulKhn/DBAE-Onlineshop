@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
 					ArrayList<Ware> warenKorb = new ArrayList<Ware>();
 					session.setAttribute("warenKorb", warenKorb);
 					
-					weiterleitung = "index.jsp";
+					weiterleitung = "menu.jsp";
 					loginbool = true;
 					Warenkorb warenkorb = new Warenkorb();
 					session.setAttribute("Warenkorb", warenkorb);

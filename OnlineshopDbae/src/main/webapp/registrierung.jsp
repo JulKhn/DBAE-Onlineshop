@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Registrierung</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
