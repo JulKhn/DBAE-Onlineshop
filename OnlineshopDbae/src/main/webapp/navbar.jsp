@@ -28,7 +28,7 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li class="active"><a href="#">Hallo, ${konto.vorname} ${konto.nachname}!<span class="sr-only">(current)</span></a></li>
-	      	<li class="active"><a href="meinKonto.jsp">Mein Konto<span class="sr-only">(current)</span></a></li>
+	      	<li class="active"><a href="konto.jsp">Mein Konto<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="menu.jsp">Menü<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="warenkorb.jsp">Warenkorb<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="#">Über uns<span class="sr-only">(current)</span></a></li>

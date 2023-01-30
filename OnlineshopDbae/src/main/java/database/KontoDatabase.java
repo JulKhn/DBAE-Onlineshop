@@ -35,8 +35,8 @@ private static Connection con = null;
 			pstmt.setString(1, konto.getVorname());
 			pstmt.setString(2, konto.getNachname());
 			pstmt.setString(3, konto.getEmail());
-			pstmt.setString(4, konto.getIban());
-			pstmt.setString(5, konto.getGeburtsdatum());
+			pstmt.setString(4, konto.getGeburtsdatum());
+			pstmt.setString(5, konto.getIban());
 			pstmt.setDouble(6, konto.getKontostand());
 			pstmt.executeUpdate();
 			
@@ -142,8 +142,7 @@ private static Connection con = null;
 			//Konto erstellen
 			while (resultsetKonto.next()) {
 				konto = new Konto(resultsetKonto.getString("vorname"), resultsetKonto.getString("nachname"), resultsetKonto.getString("email"), 
-						resultsetKonto.getString("geburtsdatum"), null,
-						resultsetKonto.getString("iban"), resultsetKonto.getDouble("kontostand"));
+						resultsetKonto.getString("geburtsdatum"), null, resultsetKonto.getString("iban"), resultsetKonto.getDouble("kontostand"));
 				konto.setId(resultsetKonto.getInt("kontoid"));
 			}
 			
