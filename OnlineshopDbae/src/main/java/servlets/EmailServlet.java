@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Base64;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +17,9 @@ import database.GuthabenAufladenDatabase;
  * AendernServlet
  * @author Julian Kuhn / Tim Fricke
  */
-public class EmailServlet {
+@WebServlet("/EmailServlet")
+public class EmailServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,8 +36,6 @@ public class EmailServlet {
 		String weiterleitung = "email.jsp";
 		HttpSession session = request.getSession();
 		byte[] passwort = request.getParameter("passwort").getBytes();
-		
-		System.out.println("TEst1234");
 		
 		/**
 		 * Im try block wird ueberprueft, ob iban und passwort mit denen des akutellen Kontos uebereinstimmen
@@ -53,6 +55,8 @@ public class EmailServlet {
 			if(EmailAendernDatabase.kontoPasswort(kontoid, passwortencoded)) {
 				session.setAttribute("aendern", true);
 				weiterleitung = "aendern.jsp";
+			} else {
+				System.out.println("Fehler");
 			}
 		request.getRequestDispatcher(weiterleitung).forward(request, response);
 	}

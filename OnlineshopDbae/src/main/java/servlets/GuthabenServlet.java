@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.util.Base64;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +17,8 @@ import database.GuthabenAufladenDatabase;
  * GuthabenServlet
  * @author Julian Kuhn / Tim Fricke
  */
-public class GuthabenServlet {
+@WebServlet("/GuthabenServlet")
+public class GuthabenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Connection con = null;
 
@@ -52,6 +55,8 @@ public class GuthabenServlet {
 		
 			//IBAN des Kontos herausfinden und mit der eingegebenen IBAN abgleichen
 			String iban2 = GuthabenAufladenDatabase.getIban(kontoid);
+			System.out.println(iban);
+			System.out.println(iban2);
 			
 			//ist die IBAN gleich der eingegebenen IBAN wird der Konto auf die aufladen JSP weitergeleitet
 			if(iban2.equals(iban)) {

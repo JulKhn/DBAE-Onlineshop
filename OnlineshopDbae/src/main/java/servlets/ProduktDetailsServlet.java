@@ -16,11 +16,11 @@ import data.Produkt;
 import database.ProduktDatabase;
 
 /**
- * AlleProdukteServlet
+ * ProduktDetailsServlet
  * @author Julian Kuhn / Tim Fricke
  */
-@WebServlet("/AlleProdukteServlet")
-public class AlleProdukteServlet extends HttpServlet{
+@WebServlet("/ProduktDetailsServlet")
+public class ProduktDetailsServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private static Connection con = null;
 

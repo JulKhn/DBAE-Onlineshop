@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 import data.Konto;
 
@@ -37,10 +38,11 @@ public class EmailAendernDatabase {
 			con = DatabaseConnection.getConnection();
 			
 			//SQL eingabe fuer das Update des Kontostandes des Kontos
-			PreparedStatement pstmt = con.prepareStatement("UPDATE kundenkonto SET kontostand = ? WHERE kontoid = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE kundenkonto SET email = ? WHERE kontoid = ?");
 			pstmt.setString(1, email);
 			pstmt.setInt(2, Kontoid);
-			pstmt.executeUpdate();
+			
+			neueEmail = email;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -51,15 +53,24 @@ public class EmailAendernDatabase {
 	
 	public static boolean kontoPasswort(int kontoid, String passwortencoded) {
 		boolean erfolg = false;
+		String pw = "";
 		
 		try {
 			con = DatabaseConnection.getConnection();
 			
 			//Passwort und KontoID aus der DB mit Eingabe abgleichen
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM passwort WHERE passwort = ? AND kontoid = ?");
-			pstmt.setString(1, passwortencoded);
-			pstmt.setInt(2, kontoid);
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM passwort WHERE kontoid = ? AND passwort = ?");
+			pstmt.setInt(1, kontoid);
+			pstmt.setString(2, passwortencoded);
 			ResultSet resultsetPW = pstmt.executeQuery();
+			
+			while (resultsetPW.next()) {
+				pw = resultsetPW.getString("passwort");
+			}
+			
+			if (pw.equals(passwortencoded)) {
+				erfolg = true;
+			}
 			
 		} catch (SQLException e){
 			System.out.println("SQLException cought -> Problem beim Einloggen " + e.toString());

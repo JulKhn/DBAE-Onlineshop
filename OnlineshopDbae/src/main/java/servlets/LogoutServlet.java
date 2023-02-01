@@ -33,7 +33,7 @@ public class LogoutServlet extends HttpServlet {
 		 * Alle Sessiondaten (z.B. Warenkorb) gehen dann verloren.
 		 */
 		try {
-			Konto konto= (Konto) session.getAttribute("benutzer"); 
+			Konto konto= (Konto) session.getAttribute("konto"); 
 			request.setAttribute("vorname", konto.getVorname());
 			request.setAttribute("nachname", konto.getNachname());
 			session.setAttribute("loginbool", false);

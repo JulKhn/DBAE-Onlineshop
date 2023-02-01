@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +13,7 @@
 <h1>Guthaben aufladen:</h1>
 
 <!-- Der Benutzer muss IBAN und Passwort fuer die Validierung eingeben -->
-Bitte geben Sie ihre IBAN und ihr Passwort ein:
+Bitte geben Sie ihre IBAN und Ihr Passwort ein:
 <br />
 <form method="POST" action="GuthabenServlet">
 	IBAN: <input type="text" name="iban" required="required" value="${ inputIBAN }"> <br />

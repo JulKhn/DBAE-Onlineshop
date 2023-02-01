@@ -19,7 +19,7 @@
 <td>Name: ${ konto.getVorname() } ${ konto.getNachname() }<td>
 <tr>
 <tr>
-<td>E-Mail Adresse: ${ konto.getEmail() }<td> <a href=email.jsp>(E-Mail Ändern)</a><td> 
+<td>E-Mail Adresse: ${ konto.getEmail() } <a href=email.jsp>(E-Mail Ändern)</a><td> 
 <tr>
 <tr>
 <td>Geburtsdatum: ${ konto.getGeburtsdatum() }<td>

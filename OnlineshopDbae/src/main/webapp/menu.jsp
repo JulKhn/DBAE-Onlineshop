@@ -30,7 +30,7 @@ ${ erfolg }
                     <td><c:out value="${produkte.farbe}" /></td>
                     <td><c:out value="${produkte.groesse}" /></td>
                     <td><c:out value="${produkte.menge}" /></td>
-                    <td> <form method="POST" action="AlleProdukteServlet">
+                    <td> <form method="POST" action="ProduktDetailsServlet">
                     	<button name="details" value="${produkte.id}">Details</button>
                     </form></td>
                     <td> <form method="POST" action="MenuServlet">

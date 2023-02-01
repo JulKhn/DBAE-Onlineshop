@@ -9,8 +9,8 @@
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
-<h1>Guthaben aufladen:</h1>
 <div align="center">
+<h1>Guthaben aufladen:</h1>
 <!-- Benutzer gibt den gewuenschten Betrag ein, welchen er aufladen moechte -->
 
 <form method="POST" action="AufladenServlet">
