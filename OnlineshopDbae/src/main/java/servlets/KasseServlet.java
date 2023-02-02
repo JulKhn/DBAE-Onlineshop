@@ -45,40 +45,46 @@ public class KasseServlet extends HttpServlet {
 		
 		String summe = request.getParameter("kaufAbschluss");
 		double kontostand = konto.getKontostand();
+		System.out.println("Kontostand konto: " + kontostand);
 		double neuerKstand = 0.0;
 		String weiterleitung = "kasse.jsp";
 		
 		//Ueberpruefung ob genug Geld vorhanden ist
+		boolean weiter = false;
 		if (kontostand - Double.parseDouble(summe) >= 0) {
 			neuerKstand = kontostand - Double.parseDouble(summe);
 			konto.setKontostand(neuerKstand);
 			weiterleitung = "warenkorb.jsp";
+			weiter = true;
 		} else {
 				request.setAttribute("error", "Ihr Kontostand ist zu gering um die Produkte zu kaufen. Bitte Geld aufladen!");
+				request.setAttribute("fehler", true);
 		}
 			
 		session.setAttribute("konto", konto);
 			
 		//Die Menge der Produkte die gekauft werden, werden aktualisiert. Falls Menge = 0 wird das Produkt aus der DB entfernt
-		for (Ware w : warenKorb) {
-			w.getProdukt().setMenge(w.getProdukt().getMenge() - w.getMenge());
-			if(w.getProdukt().getMenge() > 0) {
-				KasseDatabase.mengeAktualisieren(warenkorb, warenKorb);
-			} else {
-				KasseDatabase.produktEntfernen(warenkorb, warenKorb);
+		if (weiter) {
+			for (Ware w : warenKorb) {
+				w.getProdukt().setMenge(w.getProdukt().getMenge() - w.getMenge());
+				if(w.getProdukt().getMenge() > 0) {
+					KasseDatabase.mengeAktualisieren(warenkorb, warenKorb);
+				} else {
+					KasseDatabase.produktEntfernen(warenkorb, warenKorb);
+				}
 			}
-		}
-		
-		//neuen Kontostand des Kunden in die DB schreiben
-		int kontoid = konto.getId();
-		GuthabenAufladenDatabase.kontostandAbziehen(kontoid, neuerKstand);
-					
 			
+			//neuen Kontostand des Kunden in die DB schreiben
+			int kontoid = konto.getId();
+			GuthabenAufladenDatabase.kontostandAbziehen(kontoid, neuerKstand);
+						
+				
 			warenkorb.getWarenkorb().clear();
 			warenKorb.clear();
 			session.setAttribute("leer", true);
-			
+				
 			request.setAttribute("erfolg", "Ihre Produkte wurden erfolgreich gekauft!");
+		}
 		
 		session.setAttribute("warenKorb", warenKorb);
 		session.setAttribute("warenkorbListe", warenkorb.getWarenkorb());

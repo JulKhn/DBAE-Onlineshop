@@ -49,20 +49,28 @@ public class GuthabenServlet extends HttpServlet {
 			
 		//kontoid mit dem Passwort herausfinden
 		int kontoid = GuthabenAufladenDatabase.getKontoId(passwortencoded);
-			
-		session.setAttribute("kontoAuf", kontoid);
-		request.setAttribute("kontoAuf", kontoid);
 		
+		boolean weiter = true;
+		if (kontoid == 0) {
+			weiter = false;
+		}
+			
+		if (weiter) {
+			session.setAttribute("kontoAuf", kontoid);
+			request.setAttribute("kontoAuf", kontoid);
+			
 			//IBAN des Kontos herausfinden und mit der eingegebenen IBAN abgleichen
 			String iban2 = GuthabenAufladenDatabase.getIban(kontoid);
 			System.out.println(iban);
 			System.out.println(iban2);
-			
+				
 			//ist die IBAN gleich der eingegebenen IBAN wird der Konto auf die aufladen JSP weitergeleitet
 			if(iban2.equals(iban)) {
 				session.setAttribute("aufladen", true);
 				weiterleitung = "aufladen.jsp";
 			}
+		}
+		
 		request.getRequestDispatcher(weiterleitung).forward(request, response);
 	}
 }

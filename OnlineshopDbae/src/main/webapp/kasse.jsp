@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="java.util.ArrayList" %>
+    
+<% ArrayList warenkorb = (ArrayList)request.getAttribute("warenkorb"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +12,9 @@
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
-<h1>Übersicht:</h1>
 <!-- alle Produkte die im Warenkorb liegen werden ausgegeben -->
 <div align="center">
+<h1>Übersicht:</h1>
         <table border="1" cellpadding="5">
             <caption><h2>Ihre Produkte:</h2></caption>
             <tr>
@@ -36,6 +39,12 @@
         <form method="POST" action="KasseServlet">
 			<button name="kaufAbschluss" value="${total}">Jetzt kaufen</button>
         </form>
+        ${error}
+        <c:if test="${fehler}">
+        	<div align="center">
+        		<a href=guthaben.jsp>Geld aufladen</a>
+        	</div>
+        </c:if>
 </div>
 </body>
 </html>

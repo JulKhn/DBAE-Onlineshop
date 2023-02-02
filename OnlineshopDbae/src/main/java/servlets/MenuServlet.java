@@ -38,13 +38,16 @@ public class MenuServlet extends HttpServlet{
 		 */
 		HttpSession session = request.getSession();
 
-
 		ArrayList<Ware> warenKorb = (ArrayList<Ware>) session.getAttribute("warenKorb");
 		String produktid = request.getParameter("warenkorbHinzu");
 		String menge = request.getParameter("produktMenge");
 		session.setAttribute("menge", menge);
 		Konto konto = (Konto) session.getAttribute("konto");
 		boolean schonDa = false;
+		
+		
+		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu();
+		session.setAttribute("prodListe", prodListe);
 		
 		/**
 		 * Datenbankaufruf nach Produktid des gewaehlten Produkts.
@@ -53,9 +56,9 @@ public class MenuServlet extends HttpServlet{
 		 * hinzugefuegt werden. Soll eine groessere Menge gewaehlt werden, so muss
 		 * das Produkt nochmal geloescht und neu hinzugefuegt werden.
 		 */
-		ArrayList<Produkt> produktList = ProduktDatabase.produktMenu(konto.getId());
+		ArrayList<Produkt> produktList = ProduktDatabase.produktMenu();
 		
-		Ware neueWare = new Ware(produktList.get(1), Integer.parseInt(menge));
+		Ware neueWare = new Ware(produktList.get(Integer.parseInt(produktid) - 2), Integer.parseInt(menge));
 		for(Ware w : warenKorb) {
 			if(neueWare.getProdukt().getId() == (w.getProdukt().getId())) {
 				schonDa = true;

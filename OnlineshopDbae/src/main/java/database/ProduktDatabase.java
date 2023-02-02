@@ -13,18 +13,17 @@ public class ProduktDatabase {
 	
 	private static Connection con = null;
 
-	public static ArrayList<Produkt> produktMenu(int id) {
+	public static ArrayList<Produkt> produktMenu() {
 		
 		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
 		
 		try {
 			con = DatabaseConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM produkt");
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM produkt ORDER BY produktid");
 			ResultSet resultset = pstmt.executeQuery();
 			
 			while (resultset.next()) {
 				int prodID = resultset.getInt(1);
-				System.out.println(resultset);
 				String name = resultset.getString(2);
 				String groesse = resultset.getString(5);
 				double preis = resultset.getDouble(3);

@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 		Konto konto = KontoDatabase.getKonto(email);
 		session.setAttribute("konto", konto);
 		
-		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu(konto.getId());
+		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu();
 		session.setAttribute("prodListe", prodListe);
 		
 			if (konto.getId() != 0) {
