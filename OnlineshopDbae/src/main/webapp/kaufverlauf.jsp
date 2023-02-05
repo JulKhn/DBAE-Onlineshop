@@ -9,8 +9,9 @@
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
-
-<div align="center">
+<c:choose>
+<c:when test="${verlaufInhalt}">
+	<div align="center">
 	<table border="1" cellpadding="5">
             <caption><h2>Letzte Bestellungen</h2></caption>
             <tr>
@@ -33,6 +34,11 @@
                 </tr>
             </c:forEach>
         </table>
-</div>
+	</div>
+</c:when>
+<c:otherwise>
+	<caption><h2>Sie haben noch keine Bestellung aufgegeben</h2></caption>
+</c:otherwise>
+</c:choose>
 </body>
 </html>

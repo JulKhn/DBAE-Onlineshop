@@ -61,12 +61,18 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("aufladen", aufladen);
 		
 		Konto konto = KontoDatabase.getKonto(email);
-		session.setAttribute("konto", konto);
+		boolean weiter = false;
+		
+		if (konto != null) {
+			session.setAttribute("konto", konto);
+			weiter = true;
+		}
+
 		
 		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu();
 		session.setAttribute("prodListe", prodListe);
 		
-			if (konto.getId() != 0) {
+			if (weiter) {
 				
 				/**
 				 * da alle Passwoerter in der Datenbank verschluesselt sind muss auch das angegebene Passwort verschluesselt werden, 

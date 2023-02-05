@@ -1,8 +1,8 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.Konto;
+import data.Produkt;
 import data.Ware;
 import data.Warenkorb;
 import database.GuthabenAufladenDatabase;
 import database.KasseDatabase;
+import database.KaufVerlaufDatabase;
 
 /**
  * KasseServlet
@@ -62,27 +64,34 @@ public class KasseServlet extends HttpServlet {
 		}
 			
 		session.setAttribute("konto", konto);
-			
+		
 		//Die Menge der Produkte die gekauft werden, werden aktualisiert. Falls Menge = 0 wird das Produkt aus der DB entfernt
 		if (weiter) {
 			for (Ware w : warenKorb) {
 				w.getProdukt().setMenge(w.getProdukt().getMenge() - w.getMenge());
+				int id = konto.getId();
+				Date datum = new Date();
+				KaufVerlaufDatabase.bestelltHinzu(id, datum);
+				KaufVerlaufDatabase.produktdatenHinzu(w.getProdukt().getId(), datum);
 				if(w.getProdukt().getMenge() > 0) {
 					KasseDatabase.mengeAktualisieren(warenkorb, warenKorb);
 				} else {
 					KasseDatabase.produktEntfernen(warenkorb, warenKorb);
 				}
-			}
+		}
 			
 			//neuen Kontostand des Kunden in die DB schreiben
 			int kontoid = konto.getId();
 			GuthabenAufladenDatabase.kontostandAbziehen(kontoid, neuerKstand);
-						
-				
+			
 			warenkorb.getWarenkorb().clear();
 			warenKorb.clear();
+			
+			ArrayList<Produkt> bestellungen = KaufVerlaufDatabase.kaufVerlauf(kontoid);
+			
+			session.setAttribute("bestelltListe", bestellungen);
 			session.setAttribute("leer", true);
-				
+			
 			request.setAttribute("erfolg", "Ihre Produkte wurden erfolgreich gekauft!");
 		}
 		

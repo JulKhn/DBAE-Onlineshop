@@ -31,6 +31,7 @@
 	      	<li class="active"><a href="konto.jsp">Mein Konto<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="menu.jsp">Menü<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="warenkorb.jsp">Warenkorb<span class="sr-only">(current)</span></a></li>
+	        <li class="active"><a href="BestellVerlaufServlet">Bestellverlauf<span class="sr-only">(current)</span></a></li>
 	        <li class="active"><a href="#">Über uns<span class="sr-only">(current)</span></a></li>
     	 </ul>
     	  <form method="POST" action="LogoutServlet">
