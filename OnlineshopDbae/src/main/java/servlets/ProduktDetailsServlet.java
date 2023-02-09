@@ -55,6 +55,9 @@ public class ProduktDetailsServlet extends HttpServlet{
 			
 		}
 		
+		session.setAttribute("bildID", produktid);
+		
+		/*
 		File fi = null;
         String s = null;
         String sf = "";
@@ -66,7 +69,7 @@ public class ProduktDetailsServlet extends HttpServlet{
         fi = new File("C:\\upload\\" + s);
         sf = fi.getPath();
         
-        session.setAttribute("image", base64Image);
+        session.setAttribute("image", base64Image);*/
         
 		request.getRequestDispatcher("produktSeite.jsp").forward(request, response);
 	}

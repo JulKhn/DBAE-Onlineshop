@@ -20,6 +20,7 @@
                 <th>Farbe</th>
                 <th>Größe</th>
                 <th>Menge</th>
+                <th>Datum</th>
             </tr>
             <c:forEach var="bestellungen" items="${bestelltListe}">
                 <tr>
@@ -28,6 +29,7 @@
                     <td><c:out value="${bestellungen.farbe}" /></td>
                     <td><c:out value="${bestellungen.groesse}" /></td>
                     <td><c:out value="${bestellungen.menge}" /></td>
+                    <td><c:out value="${bestellungen.datum}" /></td>
                     <td> <form method="POST" action="ProduktDetailsServlet">
                     	<button name="details" value="${bestellungen.id}">Details</button>
                     </form></td>

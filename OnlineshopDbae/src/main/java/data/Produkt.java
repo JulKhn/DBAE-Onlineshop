@@ -9,6 +9,7 @@ public class Produkt {
 	private String farbe;
 	private int menge;
 	private byte[] bild;
+	private String datum;
 	
 
 	public Produkt(int id, String name, String groesse, double preis, String farbe, int menge, byte[] bild) {
@@ -29,6 +30,15 @@ public class Produkt {
 		this.farbe = farbe;
 		this.menge = menge;
 		this.bild = bild;
+	}
+	
+	public Produkt(String name, String groesse, double preis, String farbe, int menge, String datum) {
+		this.name = name;
+		this.groesse = groesse;
+		this.preis = preis;
+		this.farbe = farbe;
+		this.menge = menge;
+		this.datum = datum;
 	}
 
 	public int getId() {
@@ -57,6 +67,10 @@ public class Produkt {
 
 	public int getMenge() {
 		return menge;
+	}
+	
+	public String getDatum() {
+		return datum;
 	}
 
 	public byte[] getBild() {

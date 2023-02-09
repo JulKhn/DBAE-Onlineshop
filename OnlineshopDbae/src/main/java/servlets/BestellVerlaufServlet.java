@@ -35,12 +35,12 @@ public class BestellVerlaufServlet extends HttpServlet {
 		
 		ArrayList<Produkt> bestellungen = KaufVerlaufDatabase.kaufVerlauf(kontoid);
 		
-		//Menge muss noch aktualisiert werden!!
-		
-		boolean inhalt = false;
-		if (bestellungen != null) {
-			inhalt = true;
+		boolean inhalt = true;
+		if (bestellungen.isEmpty()) {
+			inhalt = false;
 		}
+		
+		System.out.println(inhalt);
 		
 		session.setAttribute("bestelltListe", bestellungen);
 		session.setAttribute("verlaufInhalt", inhalt);
@@ -51,5 +51,7 @@ public class BestellVerlaufServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		doGet(request, response);
 	}
 }

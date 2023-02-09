@@ -14,7 +14,7 @@ import database.EmailAendernDatabase;
 import database.GuthabenAufladenDatabase;
 
 /**
- * EmailServlet
+ * AendernServlet
  * @author Julian Kuhn / Tim Fricke
  */
 @WebServlet("/AendernServlet")

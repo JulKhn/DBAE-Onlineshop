@@ -18,6 +18,7 @@ import data.Warenkorb;
 import database.GuthabenAufladenDatabase;
 import database.KasseDatabase;
 import database.KaufVerlaufDatabase;
+import database.ProduktDatabase;
 
 /**
  * KasseServlet
@@ -47,7 +48,6 @@ public class KasseServlet extends HttpServlet {
 		
 		String summe = request.getParameter("kaufAbschluss");
 		double kontostand = konto.getKontostand();
-		System.out.println("Kontostand konto: " + kontostand);
 		double neuerKstand = 0.0;
 		String weiterleitung = "kasse.jsp";
 		
@@ -65,14 +65,17 @@ public class KasseServlet extends HttpServlet {
 			
 		session.setAttribute("konto", konto);
 		
+		int kontoid = konto.getId();
+		
 		//Die Menge der Produkte die gekauft werden, werden aktualisiert. Falls Menge = 0 wird das Produkt aus der DB entfernt
 		if (weiter) {
 			for (Ware w : warenKorb) {
 				w.getProdukt().setMenge(w.getProdukt().getMenge() - w.getMenge());
-				int id = konto.getId();
+				System.out.println("Menge abzug:" + w.getMenge());
 				Date datum = new Date();
-				KaufVerlaufDatabase.bestelltHinzu(id, datum);
+				KaufVerlaufDatabase.bestelltHinzu(kontoid, datum);
 				KaufVerlaufDatabase.produktdatenHinzu(w.getProdukt().getId(), datum);
+				KaufVerlaufDatabase.mengeHinzu(w.getMenge(), datum);
 				if(w.getProdukt().getMenge() > 0) {
 					KasseDatabase.mengeAktualisieren(warenkorb, warenKorb);
 				} else {
@@ -81,7 +84,6 @@ public class KasseServlet extends HttpServlet {
 		}
 			
 			//neuen Kontostand des Kunden in die DB schreiben
-			int kontoid = konto.getId();
 			GuthabenAufladenDatabase.kontostandAbziehen(kontoid, neuerKstand);
 			
 			warenkorb.getWarenkorb().clear();
@@ -94,6 +96,9 @@ public class KasseServlet extends HttpServlet {
 			
 			request.setAttribute("erfolg", "Ihre Produkte wurden erfolgreich gekauft!");
 		}
+		
+		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu();
+		session.setAttribute("prodListe", prodListe);
 		
 		session.setAttribute("warenKorb", warenKorb);
 		session.setAttribute("warenkorbListe", warenkorb.getWarenkorb());

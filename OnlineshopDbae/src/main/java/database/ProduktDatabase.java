@@ -70,4 +70,137 @@ public class ProduktDatabase {
 		
 		return base64Image;
 	}
+	
+	public static ArrayList<Produkt> produktKategorie(String kategorie) {
+		
+		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM produkt WHERE kategorie = ? ORDER BY produktid");
+			pstmt.setString(1, kategorie);
+			ResultSet resultset = pstmt.executeQuery();
+			
+			while (resultset.next()) {
+				int prodID = resultset.getInt(1);
+				String name = resultset.getString(2);
+				String groesse = resultset.getString(5);
+				double preis = resultset.getDouble(3);
+				String farbe = resultset.getString(4);
+				int menge = resultset.getInt(7);
+				
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				produkte.add(neuesProdukt);
+			}
+		} catch (SQLException e){
+			System.out.println("SQLException cought -> " + e.toString());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
+		}
+		return produkte;
+	}
+	
+	public static ArrayList<Produkt> produktPreisAuf() {
+		
+		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM produkt ORDER BY preis");
+			ResultSet resultset = pstmt.executeQuery();
+			
+			while (resultset.next()) {
+				int prodID = resultset.getInt(1);
+				String name = resultset.getString(2);
+				String groesse = resultset.getString(5);
+				double preis = resultset.getDouble(3);
+				String farbe = resultset.getString(4);
+				int menge = resultset.getInt(7);
+				
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				produkte.add(neuesProdukt);
+			}
+		} catch (SQLException e){
+			System.out.println("SQLException cought -> " + e.toString());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
+		}
+		return produkte;
+	}
+	
+	public static ArrayList<Produkt> produktPreisAb() {
+		
+		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM produkt ORDER BY preis DESC");
+			ResultSet resultset = pstmt.executeQuery();
+			
+			while (resultset.next()) {
+				int prodID = resultset.getInt(1);
+				String name = resultset.getString(2);
+				String groesse = resultset.getString(5);
+				double preis = resultset.getDouble(3);
+				String farbe = resultset.getString(4);
+				int menge = resultset.getInt(7);
+				
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				produkte.add(neuesProdukt);
+			}
+		} catch (SQLException e){
+			System.out.println("SQLException cought -> " + e.toString());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
+		}
+		return produkte;
+	}
+	
+	public static ArrayList<Produkt> produktName(String prodname) {
+		
+		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
+		
+		System.out.println("prodname DB: " + prodname);
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM produkt WHERE LOWER(name) LIKE LOWER(?)");
+			pstmt.setString(1, "%" + prodname + "%");
+			System.out.println("Statement: " + pstmt);
+			ResultSet resultset = pstmt.executeQuery();
+			
+			while (resultset.next()) {
+				int prodID = resultset.getInt(1);
+				String name = resultset.getString(2);
+				String groesse = resultset.getString(5);
+				double preis = resultset.getDouble(3);
+				String farbe = resultset.getString(4);
+				int menge = resultset.getInt(7);
+				
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				produkte.add(neuesProdukt);
+			}
+		} catch (SQLException e){
+			System.out.println("SQLException cought -> " + e.toString());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
+		}
+		return produkte;
+	}
 }

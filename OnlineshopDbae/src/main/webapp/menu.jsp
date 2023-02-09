@@ -11,9 +11,29 @@
 <%@ include file="navbar.jsp" %>
 ${ erfolg }
 <br />
-
      
     <div align="center">
+    <form action="FilterServlet" method="post">
+  		<div class="form-group">
+    		<label for="produktName">Product Name</label>
+    		<input type="text" id="produktName" name="produktName">
+    		<label for="category">Produkte nach Kategorie sortieren:</label>
+    			<select name="kategorie" id="kategorie">
+      				<option value=""></option>
+      				<option value="Elektronik">Elektronik</option>
+      				<option value="Fashion">Fashion</option>
+      				<option value="Küche, Haushalt & Wohnen">Küche, Haushalt & Wohnen</option>
+    			</select>
+  			<label for="sortBy">Produkte nach Preis sortieren:</label>
+  				<select name="sortieren" id="sortieren">
+  					<option value=""></option>
+    				<option value="aufsteigend">Aufsteigend</option>
+    				<option value="absteigend">Absteigend</option>
+  				</select>
+  			<button type="submit" class="btn btn-primary">Filtern</button>
+  		</div>
+	</form>
+
         <table border="1" cellpadding="5">
             <caption><h2>Produktübersicht</h2></caption>
             <tr>

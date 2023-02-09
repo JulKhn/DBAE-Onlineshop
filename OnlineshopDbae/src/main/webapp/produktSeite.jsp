@@ -6,6 +6,7 @@
 <meta charset="ISO-8859-1">
 <title>Details</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
@@ -34,6 +35,30 @@
 					</form></td>
             </tr>
 		</table>
+		<c:choose>
+			<c:when test="${bildID == 2}">
+			<img src="bilder/iPhoneSEred.jpg" alt="iPhone">
+			</c:when>
+			
+			<c:when test="${bildID == 3}">
+			<img src="bilder/EastpakSpringer.jpg" alt="eastpak">
+			</c:when>
+			
+			<c:when test="${bildID == 4}">
+			<img src="bilder/CasioTaschenrechner.jpg" alt="rechner">
+			</c:when>
+			
+			<c:when test="${bildID == 5}">
+			<img src="bilder/ReishungerReiskocher.jpg" alt="reis">
+			</c:when>
+			
+			<c:otherwise>
+				Kein Bild vorhanden
+			</c:otherwise>
+		</c:choose>
+		
+		
+		
 	</div>
 </body>
 </html>
