@@ -48,7 +48,7 @@ public class KaufVerlaufDatabase {
 		return bestelltListe;
 	}
 	
-	public static void bestelltHinzu(int kontoid, Date datum) {
+	public static void bestelltHinzu(int kontoid, Date datum, int menge, String name) {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    Date date = new Date();
@@ -56,9 +56,11 @@ public class KaufVerlaufDatabase {
 		
 		try {
 			con = DatabaseConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO bestellverlauf (kontoid, datum) VALUES (?, ?)");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO bestellverlauf (kontoid, menge, datum, name) VALUES (?, ?, ?, ?)");
 			pstmt.setInt(1, kontoid);
-			pstmt.setString(2, dateFormat.format(datum));
+			pstmt.setInt(2, menge);
+			pstmt.setString(3, dateFormat.format(datum));
+			pstmt.setString(4, name);
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -67,33 +69,18 @@ public class KaufVerlaufDatabase {
 		
 	}
 	
-	public static void produktdatenHinzu(int produktid, Date datum) {
+	public static void produktdatenHinzu(int produktid, Date datum, String name) {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(name);
 		
 		try {
 			con = DatabaseConnection.getConnection();
 			PreparedStatement pstmt = con.prepareStatement("UPDATE bestellverlauf SET (name, preis, farbe, groesse)"
-					+ " = (SELECT name, preis, farbe, groesse FROM produkt WHERE produktid = ?) WHERE datum = ?");
+					+ " = (SELECT name, preis, farbe, groesse FROM produkt WHERE produktid = ?) WHERE datum = ? AND name = ?");
 			pstmt.setInt(1, produktid);
 			pstmt.setString(2, dateFormat.format(datum));
-			pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
-		
-	}
-	
-	public static void mengeHinzu(int menge, Date datum) {
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
-		try {
-			con = DatabaseConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("UPDATE bestellverlauf SET menge = ? WHERE datum = ?");
-			pstmt.setInt(1, menge);
-			pstmt.setString(2, dateFormat.format(datum));
+			pstmt.setString(3, name);
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
