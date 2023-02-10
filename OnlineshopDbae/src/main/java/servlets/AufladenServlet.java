@@ -36,8 +36,6 @@ public class AufladenServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String geld = request.getParameter("geld");
 		int kontoid = (Integer) session.getAttribute("kontoAuf");
-		System.out.println(geld);
-		System.out.println(kontoid);
 		
 		/**
 		 * Auf Basis des aktuellen Kontostandes des Kontos wird in diesem Block der Kontostand des Kontos geupdatet,

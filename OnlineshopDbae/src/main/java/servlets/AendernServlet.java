@@ -36,8 +36,6 @@ public class AendernServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String email = request.getParameter("email");
 		int kontoid = (Integer) session.getAttribute("kontoAuf");
-		System.out.println(email);
-		System.out.println(kontoid);
 		
 		/**
 		 * Auf Basis des aktuellen Kontostandes des Kontos wird in diesem Block der Kontostand des Kontos geupdatet,

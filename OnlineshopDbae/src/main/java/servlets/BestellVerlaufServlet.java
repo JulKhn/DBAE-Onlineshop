@@ -40,7 +40,6 @@ public class BestellVerlaufServlet extends HttpServlet {
 			inhalt = false;
 		}
 		
-		System.out.println(inhalt);
 		
 		session.setAttribute("bestelltListe", bestellungen);
 		session.setAttribute("verlaufInhalt", inhalt);

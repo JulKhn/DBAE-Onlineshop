@@ -52,7 +52,6 @@ public class KaufVerlaufDatabase {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    Date date = new Date();
-	    System.out.println(dateFormat.format(date));
 		
 		try {
 			con = DatabaseConnection.getConnection();
@@ -72,12 +71,11 @@ public class KaufVerlaufDatabase {
 	public static void produktdatenHinzu(int produktid, Date datum, String name) {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		System.out.println(name);
 		
 		try {
 			con = DatabaseConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("UPDATE bestellverlauf SET (name, preis, farbe, groesse)"
-					+ " = (SELECT name, preis, farbe, groesse FROM produkt WHERE produktid = ?) WHERE datum = ? AND name = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE bestellverlauf SET (preis, farbe, groesse)"
+					+ " = (SELECT preis, farbe, groesse FROM produkt WHERE produktid = ?) WHERE datum = ? AND name = ?");
 			pstmt.setInt(1, produktid);
 			pstmt.setString(2, dateFormat.format(datum));
 			pstmt.setString(3, name);
