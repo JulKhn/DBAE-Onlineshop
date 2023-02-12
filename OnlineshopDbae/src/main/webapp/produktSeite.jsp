@@ -57,6 +57,21 @@
 			</c:otherwise>
 		</c:choose>
 		
+		<div class="container">
+  			<caption><h2>Gewähltes Produkt</h2></caption>
+  			<div class="card" style="width:400px">
+    			<img class="card-img-top" src="bilder/iPhoneSEred.jpg" alt="iPhone" style="width:100%">
+    			<div class="card-body">
+      			<h4 class="card-title"><c:out value="${aktuellesProdukt.name}"/></h4>
+      			<p class="card-text">
+      				<c:out value="${aktuellesProdukt.groesse}" /> <br>
+      				<c:out value="${aktuellesProdukt.farbe}" /> <br>
+      				<c:out value="${aktuellesProdukt.menge}" /> Stück auf Lager <br>
+      				<c:out value="${aktuellesProdukt.preis}" /> Euro <br>
+      			</p>
+      			<a href="#" class="btn btn-primary">See Profile</a>
+    		</div>
+  	</div>
 	</div>
 </body>
 </html>
