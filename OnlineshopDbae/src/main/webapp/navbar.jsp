@@ -22,7 +22,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-  		<a class="navbar-brand" href="index.jsp">ShopHIt</a>
+  		<a class="navbar-brand" href="#">ShopHIt</a>
   		</div>
   		<!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -35,7 +35,7 @@
 	        <li class="active"><a href="#">Über uns<span class="sr-only">(current)</span></a></li>
     	 </ul>
     	  <form method="POST" action="LogoutServlet">
-		  <input type="submit" value="Logout!">
+    	  <button class="btn btn-outline-danger" type="submit"> Logout </button>
 		  </form>
   		</div>
   		</div><!-- /.navbar-collapse -->

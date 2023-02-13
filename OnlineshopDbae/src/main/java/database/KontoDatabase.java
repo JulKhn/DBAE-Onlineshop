@@ -184,4 +184,26 @@ private static Connection con = null;
 		}
 		return kontoId;
 	}
+	
+	public static boolean emailVorhanden(String email) {
+		boolean erfolg = false;
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			
+			PreparedStatement pstmt = con.prepareStatement("SELECT email FROM kundenkonto WHERE email = ?");
+			pstmt.setString(1, email);
+			ResultSet resultsetEmail = pstmt.executeQuery();
+			
+			if (!resultsetEmail.next()) {
+				erfolg = true;
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		
+		return erfolg;
+	}
 }

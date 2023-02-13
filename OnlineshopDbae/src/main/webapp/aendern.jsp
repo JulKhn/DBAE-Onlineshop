@@ -16,7 +16,7 @@
 
 <form method="POST" action="AendernServlet">
 	Bitte geben Sie Ihre neue E-Mail ein: <input type="email" name="email" required="required" value="${ inputEmail }"> <br />
-	<input type="submit" value="Absenden!">
+	<button class="btn btn-primary" type="submit">Absenden!</button>
 </form>
 </div>
 </body>

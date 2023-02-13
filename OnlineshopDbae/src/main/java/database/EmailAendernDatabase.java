@@ -32,23 +32,24 @@ public class EmailAendernDatabase {
 		return email;
 	}
 	
-	public static String emailAktualisieren(int Kontoid, String email) {
-		String neueEmail = "";
+	public static boolean emailAktualisieren(int kontoid, String email) {
+		boolean erfolg = false;
 		try {
 			con = DatabaseConnection.getConnection();
 			
 			//SQL eingabe fuer das Update des Kontostandes des Kontos
 			PreparedStatement pstmt = con.prepareStatement("UPDATE kundenkonto SET email = ? WHERE kontoid = ?");
 			pstmt.setString(1, email);
-			pstmt.setInt(2, Kontoid);
+			pstmt.setInt(2, kontoid);
+			pstmt.executeUpdate();
 			
-			neueEmail = email;
+			erfolg = true;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 		
-		return neueEmail;
+		return erfolg;
 	}
 	
 	public static boolean kontoPasswort(int kontoid, String passwortencoded) {

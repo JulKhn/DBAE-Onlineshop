@@ -11,25 +11,27 @@
 <body>
 <%@ include file="navbar.jsp" %>
 <div align="center">
-<h1>Ihre persönlichen Daten:</h1>
-<br />
-<table>
-<!-- Alle Kundendaten werden einfach dargestellt. Wohnort und Guthaben koennen veraendert werden und es kann ein neues Produkt angeboten werden -->
-<tr>
-<td>Name: ${ konto.getVorname() } ${ konto.getNachname() }<td>
-<tr>
-<tr>
-<td>E-Mail Adresse: ${ konto.getEmail() } <a href=email.jsp>(E-Mail Ändern)</a><td> 
-<tr>
-<tr>
-<td>Geburtsdatum: ${ konto.getGeburtsdatum() }<td>
-<tr>
-<tr>
-<td>IBAN: ${ konto.getIban() }<td> 
-<tr>
-<tr>
-<td>Kontostand: ${ konto.getKontostand() } <a href=guthaben.jsp>(hier Geld aufladen!)</a><td> 
-<tr>
-</table>
+	<h1>Ihre persönlichen Daten:</h1>
+	<br />
+	<table>
+	<!-- Alle Kundendaten werden einfach dargestellt. Wohnort und Guthaben koennen veraendert werden und es kann ein neues Produkt angeboten werden -->
+		<tr>
+		<td>Name: ${ konto.getVorname() } ${ konto.getNachname() }<td>
+		<tr>
+		<tr>
+		<td>E-Mail Adresse: ${ konto.getEmail() } <a href=email.jsp>(E-Mail Ändern)</a><td> 
+		<tr>
+		<tr>
+		<td>Geburtsdatum: ${ konto.getGeburtsdatum() }<td>
+		<tr>
+		<tr>
+		<td>IBAN: ${ konto.getIban() } <a href=iban.jsp>(IBAN ändern)</a><td> 
+		<tr>
+		<tr>
+		<td>Kontostand: ${ konto.getKontostand() } <a href=guthaben.jsp>(Geld aufladen)</a><td> 
+		<tr>
+	</table>
+	${ error }
+</div>
 </body>
 </html>

@@ -20,7 +20,7 @@ public class KaufVerlaufDatabase {
 		
 		try {
 			con = DatabaseConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM bestellverlauf WHERE kontoid = ?");
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM bestellverlauf WHERE kontoid = ? ORDER BY datum");
 			pstmt.setInt(1, kontoid);
 			ResultSet resultset = pstmt.executeQuery();
 			
@@ -31,8 +31,9 @@ public class KaufVerlaufDatabase {
 				String farbe = resultset.getString(4);
 				int menge = resultset.getInt(6);
 				String datum = resultset.getString(7);
+				int id = resultset.getInt(8);
 				
-				Produkt neuesProdukt = new Produkt(name, groesse, preis, farbe, menge, datum);
+				Produkt neuesProdukt = new Produkt(name, groesse, preis, farbe, menge, datum, id);
 				bestelltListe.add(neuesProdukt);
 			}
 			
@@ -48,18 +49,18 @@ public class KaufVerlaufDatabase {
 		return bestelltListe;
 	}
 	
-	public static void bestelltHinzu(int kontoid, Date datum, int menge, String name) {
+	public static void bestelltHinzu(int kontoid, Date datum, int menge, String name, int produktid) {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    Date date = new Date();
 		
 		try {
 			con = DatabaseConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO bestellverlauf (kontoid, menge, datum, name) VALUES (?, ?, ?, ?)");
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO bestellverlauf (kontoid, menge, datum, name, produktid) VALUES (?, ?, ?, ?, ?)");
 			pstmt.setInt(1, kontoid);
 			pstmt.setInt(2, menge);
 			pstmt.setString(3, dateFormat.format(datum));
 			pstmt.setString(4, name);
+			pstmt.setInt(5, produktid);
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {

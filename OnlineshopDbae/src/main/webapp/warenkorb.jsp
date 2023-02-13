@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.ArrayList" %>
-
-<% ArrayList warenkorb = (ArrayList)request.getAttribute("warenkorb"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +15,7 @@
 <c:choose>
 <c:when test="${not leer}">
 	<div align="center">
-        <table border="1" cellpadding="5">
+        <table class="table table-hover" border="1" cellpadding="5">
             <caption><h2>Ihr Warenkorb:</h2></caption>
             <tr>
                 <th>Produktname</th>
@@ -33,12 +31,11 @@
 			<td><c:out value="${warenkorb.produkt.farbe}" /></td>
 			<td><c:out value="${warenkorb.menge}" /></td>
 			<td><c:out value="${warenkorb.menge * warenkorb.produkt.preis}" /></td>
-			<td> <form method="POST" action="WarenkorbServlet">
-	<button name="produktloeschen" value="${warenkorb.produkt.id}">Löschen</button>
-</form></td>
-
-</tr>
-</c:forEach>
+			<td><form method="POST" action="WarenkorbServlet">
+				<button class="btn btn-primary" name="produktloeschen" value="${warenkorb.produkt.id}">Löschen</button>
+				</form></td>
+			</tr>
+			</c:forEach>
         </table>
         <h3>Gesamtsumme</h3>
         <c:set var="total" value="${0}"/>
@@ -47,15 +44,17 @@
 		</c:forEach>
 		Summe: ${total}
         <form method="POST" action="kasse.jsp">
-			<button name="produktKaufen" value="${total}">Zur Kasse</button>
+			<button class="btn btn-primary" name="produktKaufen" value="${total}">Zur Kasse</button>
         </form>
     </div>
    </c:when>
    <c:otherwise>
-   		<caption><h2>Ihr Warenkorb ist leer!</h2></caption>
+   		<div align="center">
+   			<caption><h2>Ihr Warenkorb ist leer!</h2></caption>
+   		</div>
    </c:otherwise>
 </c:choose>
-${ error }
-${ erfolg }
+   ${ error }
+   ${ erfolg }
 </body>
 </html>

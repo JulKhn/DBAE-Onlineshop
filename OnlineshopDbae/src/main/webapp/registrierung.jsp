@@ -19,7 +19,7 @@
 		Passwort: <input type="password" name="passwort" required="required"> <br /> 
 		Passwort (Wiederholung): <input type="password" name="passwortWDH" required="required"> <br /> 
 		IBAN: <input type="text" name="iban" required="required" value="${ inputIban }"> <br />
-		<input type="submit" value="Absenden!">
+		<button class="btn btn-primary" type="submit">Absenden!</button>
 	</form>
 <!-- Sollten eingaben fehlen, dann erhaelt der Benutzer eine Fehlermeldung -->
 	${ error }

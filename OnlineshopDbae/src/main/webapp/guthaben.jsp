@@ -18,8 +18,9 @@ Bitte geben Sie ihre IBAN und Ihr Passwort ein:
 <form method="POST" action="GuthabenServlet">
 	IBAN: <input type="text" name="iban" required="required" value="${ inputIBAN }"> <br />
 	Passwort: <input type="password" name="passwort" required="required" value="${ inputPasswort }"> <br />
-	<input type="submit" value="Absenden!"> 
+	<button class="btn btn-primary" type="submit">Absenden!</button> 
 </form>
+	${ error }
 </div>
 </body>
 </html>

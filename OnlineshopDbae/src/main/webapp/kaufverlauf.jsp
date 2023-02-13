@@ -9,10 +9,11 @@
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
-<c:choose>
-<c:when test="${verlaufInhalt}">
-	<div align="center">
-	<table border="1" cellpadding="5">
+<div align="center">
+	<c:choose>
+		<c:when test="${verlaufInhalt}">
+	
+			<table class="table table-hover" border="1" cellpadding="5">
             <caption><h2>Letzte Bestellungen</h2></caption>
             <tr>
                 <th>Produktname</th>
@@ -31,16 +32,16 @@
                     <td><c:out value="${bestellungen.menge}" /></td>
                     <td><c:out value="${bestellungen.datum}" /></td>
                     <td> <form method="POST" action="ProduktDetailsServlet">
-                    	<button name="details" value="${bestellungen.id}">Details</button>
+                    	<button class="btn btn-primary" name="details" value="${bestellungen.id}">Details</button>
                     </form></td>
                 </tr>
             </c:forEach>
         </table>
-	</div>
-</c:when>
-<c:otherwise>
-	<caption><h2>Sie haben noch keine Bestellung aufgegeben</h2></caption>
-</c:otherwise>
-</c:choose>
+		</c:when>
+		<c:otherwise>
+		<caption><h2>Sie haben noch keine Bestellung aufgegeben</h2></caption>
+		</c:otherwise>
+	</c:choose>
+</div>
 </body>
 </html>

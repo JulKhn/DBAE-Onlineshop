@@ -62,6 +62,7 @@ public class MenuServlet extends HttpServlet{
 		for(Ware w : warenKorb) {
 			if(neueWare.getProdukt().getId() == (w.getProdukt().getId())) {
 				schonDa = true;
+				w.setMenge(w.getMenge() + Integer.parseInt(menge));
 			}
 		}
 		

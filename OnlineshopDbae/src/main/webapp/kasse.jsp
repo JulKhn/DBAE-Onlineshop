@@ -15,7 +15,7 @@
 <!-- alle Produkte die im Warenkorb liegen werden ausgegeben -->
 <div align="center">
 <h1>Übersicht:</h1>
-        <table border="1" cellpadding="5">
+        <table class="table table-hover" border="1" cellpadding="5">
             <caption><h2>Ihre Produkte:</h2></caption>
             <tr>
                 <th>Produktname</th>
@@ -37,7 +37,7 @@
 		</c:forEach>
 		Summe: ${total}
         <form method="POST" action="KasseServlet">
-			<button name="kaufAbschluss" value="${total}">Jetzt kaufen</button>
+			<button class="btn btn-primary" name="kaufAbschluss" value="${total}">Jetzt kaufen</button>
         </form>
         ${error}
         <c:if test="${fehler}">

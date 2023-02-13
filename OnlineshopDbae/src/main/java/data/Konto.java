@@ -1,9 +1,8 @@
 package data;
-import java.util.Date;
-import java.text.DateFormat;
+
 
 /**
- * Benutzer Objekt
+ * Konto Objekt
  * @author Julian Kuhn / Tim Fricke
  */
 public class Konto {
@@ -18,7 +17,7 @@ public class Konto {
 	private int id;
 	
 	/**
-	 * Konstruktor fuer den Benutzer
+	 * Konstruktor fuer das Konto
 	 * @param vorname
 	 * @param nachname
 	 * @param email
@@ -67,8 +66,12 @@ public class Konto {
 		return iban;
 	}
 	
+	public void setIban(String iban) {
+		this.iban = iban;
+	}
+	
 	public double getKontostand() {
-		return kontostand;
+		return Math.round(kontostand);
 	}
 
 	public void setPasswort(String passwort) {

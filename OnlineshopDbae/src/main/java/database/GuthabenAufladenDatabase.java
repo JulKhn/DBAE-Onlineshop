@@ -29,11 +29,11 @@ private static Connection con = null;
 		return kontostand;
 	}
 	
-	public static double kontostandAktualisieren(int Kontoid, double geld) {
+	public static double kontostandAktualisieren(int kontoid, double geld) {
 		double neuerKontostand = 0.0;
 		try {
 			con = DatabaseConnection.getConnection();
-			double kontostand = getKontostand(Kontoid);
+			double kontostand = getKontostand(kontoid);
 			System.out.println("Database Kontostand: " + kontostand);
 			
 			//neuerkontostand setzt sich aus dem aktuellen und dem eingegebenen Geld zusammen
@@ -43,7 +43,7 @@ private static Connection con = null;
 			//SQL eingabe fuer das Update des Kontostandes des Kontos
 			PreparedStatement pstmt = con.prepareStatement("UPDATE kundenkonto SET kontostand = ? WHERE kontoid = ?");
 			pstmt.setDouble(1, neuerKontostand);
-			pstmt.setInt(2, Kontoid);
+			pstmt.setInt(2, kontoid);
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {

@@ -17,7 +17,7 @@ Bitte geben Sie ihr Passwort ein:
 <br />
 <form method="POST" action="EmailServlet">
 	Passwort: <input type="password" name="passwort" required="required" value="${ inputPasswort }"> <br />
-	<input type="submit" value="Absenden!"> 
+	<button class="btn btn-primary" type="submit">Absenden!</button>
 </form>
 </div>
 </body>

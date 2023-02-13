@@ -5,23 +5,21 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Hauptmenu - ShopHIt</title>
+<title>IBAN ändern</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
 <div align="center">
-	<h1>ShopHIt</h1>
-	<form method="POST" action="LoginServlet">
-		<h2>Login <br />
-		---
-		</h2>
-		E-Mail: <input type="email" name="email"> <br /> 
-		Passwort: <input type="password" name="passwort"> <br /> 
-		<button class="btn btn-primary" type="submit">Absenden!</button>
+	<h1>IBAN ändern:</h1>
+	
+	Bitte geben Sie ihre neue IBAN ein: <br />
+	
+	<form method="POST" action="IbanServlet">
+		Neue IBAN: <input type="text" name="iban" required="required" value="${ inputIBAN }"> <br />
+		<button class="btn btn-primary" type="submit">IBAN ändern</button>
 	</form>
-	${ error }
-	${ erfolg }
+
 </div>
 </body>
 </html>

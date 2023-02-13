@@ -15,7 +15,7 @@
 
 <form method="POST" action="AufladenServlet">
 	Bitte geben Sie den Betrag ein den Sie aufladen möchten: <input type="number" name="geld" required="required" value="${ inputGeld }"> <br />
-	<input type="submit" value="Absenden!">
+	<button class="btn btn-primary" type="submit">Absenden!</button>
 </form>
 </div>
 </body>

@@ -1,19 +1,10 @@
 package servlets;
 
-import database.DatabaseConnection;
 import database.KontoDatabase;
 import logik.Validierung;
 import data.Konto;
-import java.util.Date;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -82,50 +73,56 @@ public class RegistrierungsServlet extends HttpServlet {
 		//ReGex zur Prüfung der Eingegebenen Namen und Emails
 		if(Pattern.matches("([A-Z]{1,1}[a-z]+[ -]?([A-Z]{1,1}[a-z]+)?)", vorname) && Pattern.matches("([A-Z]{1,1}[a-z]+[ -]?([A-Z]{1,1}[a-z]+)?)", nachname)) {
 			if (Pattern.matches("(([a-z.+-]{1,63})@[a-z.+-]{5,254})", email)) {
-				if (Pattern.matches("^DE[0-9]{20}$", iban)) {
-			//	if (Validierung.istZahl(alter)) {
-					if (!Validierung.istLeer(vorname) && !Validierung.istLeer(nachname) && !Validierung.istLeer(email)
-							&& !Validierung.istLeer(passwort) && !Validierung.istLeer(passwortWDH) //&& !Validierung.istLeer(geburtsdatum)
-							&& Validierung.istWiederholt(passwort, passwortWDH) && !Validierung.istLeer(iban)) {
+				boolean weiter = false;
+				weiter = KontoDatabase.emailVorhanden(email);
+				if (weiter) {
+					if (Pattern.matches("^DE[0-9]{20}$", iban)) {
+						if (!Validierung.istLeer(vorname) && !Validierung.istLeer(nachname) && !Validierung.istLeer(email)
+								&& !Validierung.istLeer(passwort) && !Validierung.istLeer(passwortWDH)
+								&& Validierung.istWiederholt(passwort, passwortWDH) && !Validierung.istLeer(iban)) {
 
-						System.out.println("[DEBUG] Alle Felder wurden erfolgreich ausgefuellt.");
+							System.out.println("[DEBUG] Alle Felder wurden erfolgreich ausgefuellt.");
 
-						HttpSession session = request.getSession();
-						Konto konto = new Konto(vorname, nachname, email, geburtsdatum, passwort, iban, 0);
-						
-						if (KontoDatabase.kontoEinfuegen(konto)) {
-							session.setAttribute("konto", konto);
-						}
-
-						ArrayList<Konto> kontoliste = new ArrayList<Konto>();
-						try {
+							HttpSession session = request.getSession();
+							Konto konto = new Konto(vorname, nachname, email, geburtsdatum, passwort, iban, 0);
 							
-							kontoliste = (ArrayList<Konto>) session.getAttribute("kontoliste");
-							
-							if (!Validierung.kontoExistiertBereits(kontoliste, konto)) {
+							if (KontoDatabase.kontoEinfuegen(konto)) {
+								session.setAttribute("konto", konto);
+							}
+
+							ArrayList<Konto> kontoliste = new ArrayList<Konto>();
+							try {
+								
+								kontoliste = (ArrayList<Konto>) session.getAttribute("kontoliste");
+								
+								if (!Validierung.kontoExistiertBereits(kontoliste, konto)) {
+									session.setAttribute("benutzer", konto);
+									kontoliste.add(konto);
+									session.setAttribute("benutzerliste", kontoliste);
+									session.setAttribute("erfolg", "Neues Konto wurde erfolgreich registriert.");
+									weiterleitung = "index.jsp"; 
+									error = "neues Konto wurde erfolgreich registriert.";
+								} else {
+									request.setAttribute("inputGeburtsdatum", geburtsdatum);
+									error += "Konto existiert bereits!";
+								}
+							} catch (NullPointerException npe) {
 								session.setAttribute("benutzer", konto);
+								kontoliste = new ArrayList<Konto>();
 								kontoliste.add(konto);
 								session.setAttribute("benutzerliste", kontoliste);
-								session.setAttribute("erfolg", "neuer Benutzer wurde erfolgreich registriert.");
+								session.setAttribute("erfolg", "Neues Konto wurde erfolgreich registriert.");
 								weiterleitung = "index.jsp"; 
-							} else {
-								request.setAttribute("inputGeburtsdatum", geburtsdatum);
-								error += "Kunde existiert bereits!";
 							}
-						} catch (NullPointerException npe) {
-							session.setAttribute("benutzer", konto);
-							kontoliste = new ArrayList<Konto>();
-							kontoliste.add(konto);
-							session.setAttribute("benutzerliste", kontoliste);
-							session.setAttribute("erfolg", "neuer Benutzer wurde erfolgreich registriert.");
-							weiterleitung = "index.jsp"; 
-						}
 
+						} else {
+							error += "Mindestens ein verpflichtendes Feld wurde nicht ausgefuellt! ";
+						}
 					} else {
-						error += "Mindestens ein verpflichtendes Feld wurde nicht ausgefuellt! ";
+						error += "Die IBAN entspricht nicht den Vorgaben! Die IBAN muss mit 'DE' beginnen. Danach müssen 20 Ziffern folgen.";
 					}
 				} else {
-					error += "Die IBAN entspricht nicht den Vorgaben! Die IBAN muss mit 'DE' beginnen. Danach müssen 20 Ziffern folgen.";
+					error += "Die eingegebene E-Mail ist bereits vergeben.";
 				}
 			}  else {
 				error += "Die E-Mail entspricht nicht den Vorgaben! Ihre E-Mail muss aus zwei Teilen, welche mit einem @ getrennt werden bestehen und darf nur aus Kleinbuchstaben, Punkten, Plus und Minus bestehen. Maximale Länge sind 254 Zeichen.";

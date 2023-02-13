@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import data.Konto;
 
 public class Validierung {
-	/** Prüft auf einen leeren String. Man hätte auch einfach .isEmpty() nehmen können :)
+	/** Prueft auf einen leeren String. Man haette auch einfach .isEmpty() nehmen koennen :)
 	 * @param wert
 	 * @return
 	 */
@@ -17,7 +17,7 @@ public class Validierung {
 		return leer;
 	}
 
-	/** Prüfe auf Passwortwiederholung. Auch nur "Proof of Concept". 
+	/** Pruefe auf Passwortwiederholung. Auch nur "Proof of Concept". 
 	 * @param passwort
 	 * @param passwortWDH
 	 * @return
@@ -26,8 +26,8 @@ public class Validierung {
 		return passwort.equals(passwortWDH);
 	}
 
-	/** Geht die Kundenliste durch und prüft, ob die Kombination aus E-Mail und Passwort bereits existiert. 
-	 * Wird für die Login-Funktion verwendet. 
+	/** Geht die Kundenliste durch und prueft, ob die Kombination aus E-Mail und Passwort bereits existiert. 
+	 * Wird fuer die Login-Funktion verwendet. 
 	 * @param kundenliste
 	 * @param kunde
 	 * @return
@@ -44,7 +44,7 @@ public class Validierung {
 		return erfolg;
 	}
 
-	/** Prüft, ob bspw. beim Alter eine Zahl eingegeben worden ist.
+	/** Prueft, ob bspw. beim Alter eine Zahl eingegeben worden ist.
 	 * @param zahl
 	 * @return
 	 */
@@ -58,18 +58,5 @@ public class Validierung {
 		}
 		return erfolg;
 	}
-
-	/** Sucht nach der höchsten ID in der Kontoliste. Wird verwendet, um 
-	 * anschließend die nächste ID zu inkrementieren (für den nächsten Kontoeintrag). 
-	 * @param kontoliste
-	 * @return
-	 */
-	/*public static int getHoechsteID(ArrayList<Konto> kontoliste) {
-		int counter = 0;
-		for (Konto konto : kontoliste) {
-			counter = konto.getKontoID();
-		}
-		return counter;
-	}*/
 
 }

@@ -8,11 +8,10 @@ public class Produkt {
 	private double preis;
 	private String farbe;
 	private int menge;
-	private byte[] bild;
 	private String datum;
 	
 
-	public Produkt(int id, String name, String groesse, double preis, String farbe, int menge, byte[] bild) {
+	public Produkt(int id, String name, String groesse, double preis, String farbe, int menge) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -20,25 +19,24 @@ public class Produkt {
 		this.preis = preis;
 		this.farbe = farbe;
 		this.menge = menge;
-		this.bild = bild;
 	}
 	
-	public Produkt(String name, String groesse, double preis, String farbe, int menge, byte[] bild) {
+	public Produkt(String name, String groesse, double preis, String farbe, int menge) {
 		this.name = name;
 		this.groesse = groesse;
 		this.preis = preis;
 		this.farbe = farbe;
 		this.menge = menge;
-		this.bild = bild;
 	}
 	
-	public Produkt(String name, String groesse, double preis, String farbe, int menge, String datum) {
+	public Produkt(String name, String groesse, double preis, String farbe, int menge, String datum, int id) {
 		this.name = name;
 		this.groesse = groesse;
 		this.preis = preis;
 		this.farbe = farbe;
 		this.menge = menge;
 		this.datum = datum;
+		this.id = id;
 	}
 
 	public int getId() {
@@ -73,10 +71,6 @@ public class Produkt {
 		return datum;
 	}
 
-	public byte[] getBild() {
-		return bild;
-	}
-	
 	public void setMenge(int menge) {
 		this.menge = menge;
 	}

@@ -72,7 +72,7 @@ public class KasseServlet extends HttpServlet {
 			for (Ware w : warenKorb) {
 				w.getProdukt().setMenge(w.getProdukt().getMenge() - w.getMenge());
 				Date datum = new Date();
-				KaufVerlaufDatabase.bestelltHinzu(kontoid, datum, w.getMenge(), w.getProdukt().getName());
+				KaufVerlaufDatabase.bestelltHinzu(kontoid, datum, w.getMenge(), w.getProdukt().getName(), w.getProdukt().getId());
 				KaufVerlaufDatabase.produktdatenHinzu(w.getProdukt().getId(), datum, w.getProdukt().getName());
 				if(w.getProdukt().getMenge() > 0) {
 					KasseDatabase.mengeAktualisieren(warenkorb, warenKorb);

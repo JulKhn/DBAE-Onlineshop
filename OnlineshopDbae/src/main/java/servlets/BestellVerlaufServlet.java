@@ -15,7 +15,7 @@ import data.Produkt;
 import database.KaufVerlaufDatabase;
 
 /**
- * KasseServlet
+ * BestellVerlaufServlet
  * @author Julian Kuhn / Tim Fricke
  */
 @WebServlet("/BestellVerlaufServlet")

@@ -38,6 +38,7 @@ public class GuthabenServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String iban = request.getParameter("iban");
 		byte[] passwort = request.getParameter("passwort").getBytes();
+		String error = "";
 		
 		/**
 		 * Im try block wird ueberprueft, ob iban und passwort mit denen des akutellen Kontos uebereinstimmen
@@ -61,13 +62,13 @@ public class GuthabenServlet extends HttpServlet {
 			
 			//IBAN des Kontos herausfinden und mit der eingegebenen IBAN abgleichen
 			String iban2 = GuthabenAufladenDatabase.getIban(kontoid);
-			System.out.println(iban);
-			System.out.println(iban2);
 				
 			//ist die IBAN gleich der eingegebenen IBAN wird der Konto auf die aufladen JSP weitergeleitet
 			if(iban2.equals(iban)) {
 				session.setAttribute("aufladen", true);
 				weiterleitung = "aufladen.jsp";
+			} else {
+				error = "Die eingegebene IBAN stimmt nicht mit der IBAN Ihres Kontos überein";
 			}
 		}
 		

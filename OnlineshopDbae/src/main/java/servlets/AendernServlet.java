@@ -36,21 +36,33 @@ public class AendernServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String email = request.getParameter("email");
 		int kontoid = (Integer) session.getAttribute("kontoAuf");
+		boolean erfolg = false;
+		String error = "";
 		
 		/**
 		 * Auf Basis des aktuellen Kontostandes des Kontos wird in diesem Block der Kontostand des Kontos geupdatet,
 		 * indem dem aktuellen Kontostand der eingegebene Betrag ("geld") addiert wird.
 		 */
 		String emailAkt = EmailAendernDatabase.getEmail(kontoid);
-		 
-		//SQL eingabe fuer das Update des Kontostandes des Kontos
-		String neueEmail = EmailAendernDatabase.emailAktualisieren(kontoid, email);
-			
-		//Konto in der Session den neuen Kontostand hinzufuegen
-		Konto konto = (Konto) session.getAttribute("konto");
-		konto.setEmail(neueEmail);
-		session.setAttribute("konto", konto);
 		
+		//SQL eingabe fuer das Update des Kontostandes des Kontos
+		erfolg = EmailAendernDatabase.emailAktualisieren(kontoid, email);
+		System.out.println("Erfolg? " + erfolg);
+		if (erfolg) {
+			error = "Die E-Mail wurde erfolgreich geändert!";
+			String neueEmail = EmailAendernDatabase.getEmail(kontoid);
+			
+			//Konto in der Session den neuen Kontostand hinzufuegen
+			Konto konto = (Konto) session.getAttribute("konto");
+			konto.setEmail(neueEmail);
+			
+			session.setAttribute("konto", konto);
+			
+		} else {
+			error = "Fehler bei der Eingabe. Die E-Mail muss immer einzigartig sein!";
+		}
+		
+		request.setAttribute("error", error);
 		request.getRequestDispatcher("konto.jsp").forward(request, response);
 	}
 }

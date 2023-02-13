@@ -30,7 +30,7 @@ public class ProduktDatabase {
 				String farbe = resultset.getString(4);
 				int menge = resultset.getInt(7);
 				
-				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge);
 				produkte.add(neuesProdukt);
 			}
 		} catch (SQLException e){
@@ -89,7 +89,7 @@ public class ProduktDatabase {
 				String farbe = resultset.getString(4);
 				int menge = resultset.getInt(7);
 				
-				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge);
 				produkte.add(neuesProdukt);
 			}
 		} catch (SQLException e){
@@ -121,7 +121,7 @@ public class ProduktDatabase {
 				String farbe = resultset.getString(4);
 				int menge = resultset.getInt(7);
 				
-				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge);
 				produkte.add(neuesProdukt);
 			}
 		} catch (SQLException e){
@@ -153,7 +153,7 @@ public class ProduktDatabase {
 				String farbe = resultset.getString(4);
 				int menge = resultset.getInt(7);
 				
-				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge);
 				produkte.add(neuesProdukt);
 			}
 		} catch (SQLException e){
@@ -189,7 +189,7 @@ public class ProduktDatabase {
 				String farbe = resultset.getString(4);
 				int menge = resultset.getInt(7);
 				
-				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge, farbe.getBytes());
+				Produkt neuesProdukt = new Produkt(prodID, name, groesse, preis, farbe, menge);
 				produkte.add(neuesProdukt);
 			}
 		} catch (SQLException e){
