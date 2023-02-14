@@ -12,7 +12,7 @@
 <div align="center">
 <h1>E-Mail ändern:</h1>
 
-<!-- Benutzer gibt seine neue E-Mail ein, welche er verwenden moechte -->
+<!-- Nutzer gibt seine neue E-Mail ein, welche er verwenden moechte -->
 
 <form method="POST" action="AendernServlet">
 	Bitte geben Sie Ihre neue E-Mail ein: <input type="email" name="email" required="required" value="${ inputEmail }"> <br />

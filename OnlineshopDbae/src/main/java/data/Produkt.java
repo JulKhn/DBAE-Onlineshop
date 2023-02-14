@@ -1,5 +1,10 @@
 package data;
 
+/**
+ * Produkt Objekt
+ * @author Julian Kuhn, Tim Fricke
+ *
+ */
 public class Produkt {
 
 	private int id;
@@ -11,6 +16,16 @@ public class Produkt {
 	private String datum;
 	
 
+	/**
+	 * Drei verschiedene Konstruktoren fuer das Produkt
+	 * @param id
+	 * @param name
+	 * @param groesse
+	 * @param preis
+	 * @param farbe
+	 * @param menge
+	 * @param datum
+	 */
 	public Produkt(int id, String name, String groesse, double preis, String farbe, int menge) {
 		super();
 		this.id = id;

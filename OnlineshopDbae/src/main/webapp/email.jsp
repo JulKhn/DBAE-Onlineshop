@@ -12,7 +12,7 @@
 <div align="center">
 <h1>E-Mail ändern:</h1>
 
-<!-- Der Benutzer muss sein Passwort fuer die Validierung eingeben -->
+<!-- Der Nutzer muss sein Passwort fuer die Validierung eingeben -->
 Bitte geben Sie ihr Passwort ein:
 <br />
 <form method="POST" action="EmailServlet">

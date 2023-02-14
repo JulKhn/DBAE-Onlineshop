@@ -41,8 +41,6 @@ public class AufladenServlet extends HttpServlet {
 		 * Auf Basis des aktuellen Kontostandes des Kontos wird in diesem Block der Kontostand des Kontos geupdatet,
 		 * indem dem aktuellen Kontostand der eingegebene Betrag ("geld") addiert wird.
 		 */
-		double kontostand = GuthabenAufladenDatabase.getKontostand(kontoid);
-		 
 		//SQL eingabe fuer das Update des Kontostandes des Kontos
 		double neuerkontostand = GuthabenAufladenDatabase.kontostandAktualisieren(kontoid, Double.parseDouble(geld));
 			

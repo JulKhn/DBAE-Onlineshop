@@ -21,7 +21,7 @@
 		IBAN: <input type="text" name="iban" required="required" value="${ inputIban }"> <br />
 		<button class="btn btn-primary" type="submit">Absenden!</button>
 	</form>
-<!-- Sollten eingaben fehlen, dann erhaelt der Benutzer eine Fehlermeldung -->
+<!-- Sollten eingaben fehlen, dann erhaelt der Nutzer eine Fehlermeldung -->
 	${ error }
 </div>
 </body>

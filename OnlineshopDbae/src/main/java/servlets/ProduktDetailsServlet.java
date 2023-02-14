@@ -1,6 +1,5 @@
 package servlets;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.Produkt;
-import database.ProduktDatabase;
 
 /**
  * ProduktDetailsServlet
@@ -22,7 +20,6 @@ import database.ProduktDatabase;
 @WebServlet("/ProduktDetailsServlet")
 public class ProduktDetailsServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	private static Connection con = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -31,10 +28,8 @@ public class ProduktDetailsServlet extends HttpServlet{
 	}
 
 	/**
-	 *Von der Menu JSP wird die passende Produktid uebergeben, anhand dieser wird aus 
-	 *der Datenbank das Byte-Array des Bildes gezogen. Dieses wird mit Base64 encoded
-	 *und dann als Base64 image gespeichert und zum Schluss in der Session gespeichert,
-	 *um es in der JSP auszugeben
+	 *Von der Menu JSP wird die passende Produktid uebergeben. Anhand der Produktid wird das richtige
+	 *Bild ausgewaehlt und in den Produktdetails angezeigt.
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

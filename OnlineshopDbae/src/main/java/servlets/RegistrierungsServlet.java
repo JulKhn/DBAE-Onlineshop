@@ -1,5 +1,6 @@
 package servlets;
 
+import database.IbanAendernDatabase;
 import database.KontoDatabase;
 import logik.Validierung;
 import data.Konto;
@@ -30,7 +31,7 @@ public class RegistrierungsServlet extends HttpServlet {
 
 	/**
 	 *Die Daten aus dem Formular nach Pruefung in die DB schreiben. 
-	 *Benutzer erstellen und in die Session einfuegen
+	 *Konto erstellen und in die Session einfuegen.
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -86,35 +87,40 @@ public class RegistrierungsServlet extends HttpServlet {
 							HttpSession session = request.getSession();
 							Konto konto = new Konto(vorname, nachname, email, geburtsdatum, passwort, iban, 0);
 							
+							/**
+							 *Die Eingaben sind an diesem Punkt alle geprueft und sind gueltig fuer die Registrierung. Im letzten Schritt wird hier nochmal
+							 *geprueft, ob die eingegebene IBAN auch einzigartig ist oder nicht. Sollte dies der Fall sein wird dem Nutzer wieder eine
+							 *Fehlermeldung ausgegeben.
+							 */
 							if (KontoDatabase.kontoEinfuegen(konto)) {
 								session.setAttribute("konto", konto);
-							}
-
-							ArrayList<Konto> kontoliste = new ArrayList<Konto>();
-							try {
-								
-								kontoliste = (ArrayList<Konto>) session.getAttribute("kontoliste");
-								
-								if (!Validierung.kontoExistiertBereits(kontoliste, konto)) {
-									session.setAttribute("benutzer", konto);
+								ArrayList<Konto> kontoliste = new ArrayList<Konto>();
+								try {
+									
+									kontoliste = (ArrayList<Konto>) session.getAttribute("kontoliste");
+									
+									if (!Validierung.kontoExistiertBereits(kontoliste, konto)) {
+										session.setAttribute("konto", konto);
+										kontoliste.add(konto);
+										session.setAttribute("kontoliste", kontoliste);
+										session.setAttribute("erfolg", "Neues Konto wurde erfolgreich registriert.");
+										weiterleitung = "index.jsp"; 
+										error = "neues Konto wurde erfolgreich registriert.";
+									} else {
+										request.setAttribute("inputGeburtsdatum", geburtsdatum);
+										error += "Konto existiert bereits!";
+									}
+								} catch (NullPointerException npe) {
+									session.setAttribute("konto", konto);
+									kontoliste = new ArrayList<Konto>();
 									kontoliste.add(konto);
-									session.setAttribute("benutzerliste", kontoliste);
+									session.setAttribute("kontoliste", kontoliste);
 									session.setAttribute("erfolg", "Neues Konto wurde erfolgreich registriert.");
 									weiterleitung = "index.jsp"; 
-									error = "neues Konto wurde erfolgreich registriert.";
-								} else {
-									request.setAttribute("inputGeburtsdatum", geburtsdatum);
-									error += "Konto existiert bereits!";
 								}
-							} catch (NullPointerException npe) {
-								session.setAttribute("benutzer", konto);
-								kontoliste = new ArrayList<Konto>();
-								kontoliste.add(konto);
-								session.setAttribute("benutzerliste", kontoliste);
-								session.setAttribute("erfolg", "Neues Konto wurde erfolgreich registriert.");
-								weiterleitung = "index.jsp"; 
+							} else {
+								error = "Fehler bei der Eingabe. Die Iban muss immer einzigartig sein!";
 							}
-
 						} else {
 							error += "Mindestens ein verpflichtendes Feld wurde nicht ausgefuellt! ";
 						}

@@ -27,10 +27,14 @@ public class BestellVerlaufServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		/**
-		 * Warenkorb und Konto aus der Session holen
+		 * Hier wird auf Basis des angemeldeten Kontos ein DB-Aufruf gestartet, in dem der
+		 * Bestellverlauf eines Kontos abgerufen wird. Sollte das Konto noch keine
+		 * Bestellungen aufgegeben haben, wird ein Boolean in die JSP uebergeben und ein
+		 * Text ausgegeben.
+		 * Da hierbei das Servlet als erstes aufgerufen und dann zur JSP weitergeleitet wird, 
+		 * verwenden wir die doGet Methode.
 		 */
 		Konto konto = (Konto) session.getAttribute("konto");
-		
 		int kontoid = konto.getId();
 		
 		ArrayList<Produkt> bestellungen = KaufVerlaufDatabase.kaufVerlauf(kontoid);
@@ -39,7 +43,6 @@ public class BestellVerlaufServlet extends HttpServlet {
 		if (bestellungen.isEmpty()) {
 			inhalt = false;
 		}
-		
 		
 		session.setAttribute("bestelltListe", bestellungen);
 		session.setAttribute("verlaufInhalt", inhalt);

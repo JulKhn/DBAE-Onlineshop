@@ -5,10 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Klasse, bei der mit dem Guthaben der Konten gearbeitet werden kann
+ * @author Julian Kuhn / Tim Fricke
+ *
+ */
 public class GuthabenAufladenDatabase {
 
 private static Connection con = null;
 	
+	/**
+	 * Ermittelt den aktuellen Kontostand eines bestimmten Kontos
+	 * @param Kontoid
+	 * @return aktueller Kontostand
+	 */
 	public static double getKontostand(int Kontoid) {
 		double kontostand = 0.0;
 		try {
@@ -24,11 +34,17 @@ private static Connection con = null;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+		} 
 		return kontostand;
 	}
 	
+	/**
+	 * Diese Methode aktualisiert den Kontostand eines bestimmten Kontos, indem ein vom Nutzer eingegebener Betrag mit dem 
+	 * aktuellen Kontostand zusammengerechnet und ein Update in der DB ausgefuehrt wird.
+	 * @param kontoid
+	 * @param geld
+	 * @return neuer Kontostand
+	 */
 	public static double kontostandAktualisieren(int kontoid, double geld) {
 		double neuerKontostand = 0.0;
 		try {
@@ -53,6 +69,13 @@ private static Connection con = null;
 		return neuerKontostand;
 	}
 	
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Nutzer einen Kauf taetigt. Hier wird der Kontostand
+	 * des Nutzers um den entsprechenden Wert reduziert.
+	 * @param Kontoid
+	 * @param geld
+	 * @return neuer Kontostand
+	 */
 	public static double kontostandAbziehen(int Kontoid, double geld) {
 		double neuerKontostand = 0.0;
 		try {
@@ -74,8 +97,13 @@ private static Connection con = null;
 		return neuerKontostand;
 	}
 	
+	/**
+	 * Bei dieser Methode soll die Kontoid des Nutzers herausgefunden werden, indem das Passwort eingegeben wird.
+	 * @param passwortencoded
+	 * @return kontoid
+	 */
 	public static int getKontoId(String passwortencoded) {
-		int Kontoid = 0;
+		int kontoid = 0;
 		try {
 			con = DatabaseConnection.getConnection();
 			
@@ -85,7 +113,7 @@ private static Connection con = null;
 			
 			//Kontoid initialisieren
 			while (resultsetPw.next()) {
-				Kontoid = resultsetPw.getInt("kontoid");
+				kontoid = resultsetPw.getInt("kontoid");
 			}
 			
 		} catch (SQLException e) {
@@ -98,17 +126,22 @@ private static Connection con = null;
 			}
 		}
 		
-		return Kontoid;
+		return kontoid;
 	}
 	
-	public static String getIban(int Kontoid) {
+	/**
+	 * Hier soll die Iban des Kontos mithilfe der Kontoid herausgefunden werden.
+	 * @param kontoid
+	 * @return Iban
+	 */
+	public static String getIban(int kontoid) {
 		String iban = null;
 		
 		try {
 			con = DatabaseConnection.getConnection();
 			
 			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM kundenkonto WHERE kontoid = ?");
-			pstmt.setInt(1, Kontoid);
+			pstmt.setInt(1, kontoid);
 			ResultSet resultsetIban = pstmt.executeQuery();
 			
 			while (resultsetIban.next()) {
@@ -124,8 +157,6 @@ private static Connection con = null;
 				System.err.println("Verbindung geschlossen?" + e.toString());
 			}
 		}
-		
 		return iban;
-		
 	}
 }

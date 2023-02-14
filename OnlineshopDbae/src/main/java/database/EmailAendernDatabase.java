@@ -8,10 +8,20 @@ import java.util.Iterator;
 
 import data.Konto;
 
+/**
+ * Klasse, um mit der E-Mail in der Datenbank zu arbeiten
+ * @author Julian Kuhn / Tim Fricke
+ *
+ */
 public class EmailAendernDatabase {
 
 	private static Connection con = null;
 	
+	/**
+	 * Findet die zu einem bestimmten Konto zugehoerige Email heraus
+	 * @param Kontoid
+	 * @return email
+	 */
 	public static String getEmail(int Kontoid) {
 		String email = "";
 		try {
@@ -27,11 +37,22 @@ public class EmailAendernDatabase {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
 		}
-		
 		return email;
 	}
 	
+	/**
+	 * Aktualisiert die Email eines Kontos, wenn der Nutzer seine Email aendern moechte
+	 * @param kontoid
+	 * @param email
+	 * @return boolean
+	 */
 	public static boolean emailAktualisieren(int kontoid, String email) {
 		boolean erfolg = false;
 		try {
@@ -52,6 +73,12 @@ public class EmailAendernDatabase {
 		return erfolg;
 	}
 	
+	/**
+	 * Prueft, ob ein eingegebenes Passwort mit dem Passwort aus der DB uebereinstimmt
+	 * @param kontoid
+	 * @param passwortencoded
+	 * @return
+	 */
 	public static boolean kontoPasswort(int kontoid, String passwortencoded) {
 		boolean erfolg = false;
 		String pw = "";
@@ -78,10 +105,10 @@ public class EmailAendernDatabase {
 		} finally {
 			try {
 				con.close();
-		} catch (SQLException e) {
-			System.err.println("Verbindung geschlossen?" + e.toString());
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
 		}
-	}
 		return erfolg;
 	}
 }

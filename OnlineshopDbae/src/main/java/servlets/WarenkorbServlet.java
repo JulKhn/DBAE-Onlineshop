@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -33,7 +32,7 @@ public class WarenkorbServlet extends HttpServlet {
 		
 		/**
 		 * Hier wird der Warenkorb verwaltet.
-		 * Der Benutzer soll die moeglichkeit haben Produkte wieder aus dem Warenkorb zu löschen, 
+		 * Der Nutzer soll die moeglichkeit haben Produkte wieder aus dem Warenkorb zu löschen, 
 		 * indem das Produkt mit der zugehoerigen Produktid durch einen Button aus dem Warenkorb 
 		 * geloescht wird.
 		 */

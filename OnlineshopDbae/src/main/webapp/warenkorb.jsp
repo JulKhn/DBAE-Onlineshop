@@ -11,11 +11,11 @@
 <body>
 <%@ include file="navbar.jsp" %>
 
-<!-- Wenn der Benutzer Produkte im Warenkorb hat, dann werden diese hier angezeigt. -->
+<!-- Wenn der Nutzer Produkte im Warenkorb hat, dann werden diese hier angezeigt. -->
 <c:choose>
 <c:when test="${not leer}">
 	<div align="center">
-        <table class="table table-hover" border="1" cellpadding="5">
+        <table class="table table-hover" border="1">
             <caption><h2>Ihr Warenkorb:</h2></caption>
             <tr>
                 <th>Produktname</th>

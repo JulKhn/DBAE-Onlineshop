@@ -10,7 +10,7 @@
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
-<!-- Klickt der Benutzer auf die Details eines Produkts, so wird das gewaehlte Produkt im Vollbild angezeigt -->
+<!-- Klickt der Nutzer auf die Details eines Produkts, so wird das gewaehlte Produkt im Vollbild angezeigt -->
       
     <div align="center">
 		

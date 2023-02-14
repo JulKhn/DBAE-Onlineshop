@@ -8,6 +8,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <script>
+	//Script in dem der Nutzer nach erfolgreichem logout innerhalb von 5 Sekunden wieder auf die Index JSP geleitet wird.
     var sekunden = 5;
     var seite = "index.jsp";
 

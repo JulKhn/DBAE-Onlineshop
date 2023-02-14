@@ -10,10 +10,21 @@ import java.util.ArrayList;
 
 import data.Produkt;
 
+/**
+ * Klasse fuer den Bestellverlauf
+ * @author Julian Kuhn / Tim Fricke
+ *
+ */
 public class KaufVerlaufDatabase {
 	
 	private static Connection con = null;
 	
+	/**
+	 * In dieser Methode werden einfach alle Produkte, die ein bestimmtes Konto erworben hat
+	 * in eine Liste gespeichert und an das Servlet weitergegeben.
+	 * @param kontoid
+	 * @return Arraylist mit bestellten Produkten
+	 */
 	public static ArrayList<Produkt> kaufVerlauf(int kontoid) {
 		
 		ArrayList<Produkt> bestelltListe = new ArrayList<Produkt>();
@@ -49,6 +60,15 @@ public class KaufVerlaufDatabase {
 		return bestelltListe;
 	}
 	
+	/**
+	 * Wenn ein Nutzer die Produkte in seinem Warenkorb kauft, werden sie hiermit automatisch der 
+	 * Datenbank hinzugefuegt und einer bestimmten Zeit zugewiesen.
+	 * @param kontoid
+	 * @param datum
+	 * @param menge
+	 * @param name
+	 * @param produktid
+	 */
 	public static void bestelltHinzu(int kontoid, Date datum, int menge, String name, int produktid) {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -65,10 +85,22 @@ public class KaufVerlaufDatabase {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
-		
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
+		}
 	}
 	
+	/**
+	 * Um das Insert Into Statement aus bestelltHinzu kleiner zu halten, werden hier alle restlichen Werte
+	 * des gekauften Produkts in die DB bestellverlauf kopiert.
+	 * @param produktid
+	 * @param datum
+	 * @param name
+	 */
 	public static void produktdatenHinzu(int produktid, Date datum, String name) {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -84,8 +116,12 @@ public class KaufVerlaufDatabase {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
-		
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
+		}
 	}
-
 }

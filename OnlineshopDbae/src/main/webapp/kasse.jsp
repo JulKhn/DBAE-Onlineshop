@@ -2,7 +2,6 @@
     pageEncoding="ISO-8859-1"%>
     <%@page import="java.util.ArrayList" %>
     
-<% ArrayList warenkorb = (ArrayList)request.getAttribute("warenkorb"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +14,7 @@
 <!-- alle Produkte die im Warenkorb liegen werden ausgegeben -->
 <div align="center">
 <h1>Übersicht:</h1>
-        <table class="table table-hover" border="1" cellpadding="5">
+        <table class="table table-hover" border="1">
             <caption><h2>Ihre Produkte:</h2></caption>
             <tr>
                 <th>Produktname</th>

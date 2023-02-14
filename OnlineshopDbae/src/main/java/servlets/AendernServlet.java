@@ -40,19 +40,19 @@ public class AendernServlet extends HttpServlet {
 		String error = "";
 		
 		/**
-		 * Auf Basis des aktuellen Kontostandes des Kontos wird in diesem Block der Kontostand des Kontos geupdatet,
-		 * indem dem aktuellen Kontostand der eingegebene Betrag ("geld") addiert wird.
+		 * Nach einer Ueberpruefung, ob die Anfrage, die Email zu aendern, gueltig ist,
+		 * wird die neue Email in der Session gespeichert und dem Konto hinzugefuegt. Sollte
+		 * Die Email bereits vorhanden sein, so wird ein Fehler ausgegeben.
 		 */
-		String emailAkt = EmailAendernDatabase.getEmail(kontoid);
 		
-		//SQL eingabe fuer das Update des Kontostandes des Kontos
+		//SQL eingabe fuer das Update der Email des Kontos
 		erfolg = EmailAendernDatabase.emailAktualisieren(kontoid, email);
 		System.out.println("Erfolg? " + erfolg);
 		if (erfolg) {
 			error = "Die E-Mail wurde erfolgreich geändert!";
 			String neueEmail = EmailAendernDatabase.getEmail(kontoid);
 			
-			//Konto in der Session den neuen Kontostand hinzufuegen
+			//Konto in der Session die neue Email hinzufuegen
 			Konto konto = (Konto) session.getAttribute("konto");
 			konto.setEmail(neueEmail);
 			

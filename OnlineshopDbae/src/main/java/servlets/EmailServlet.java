@@ -14,7 +14,7 @@ import database.EmailAendernDatabase;
 import database.GuthabenAufladenDatabase;
 
 /**
- * AendernServlet
+ * EmailServlet
  * @author Julian Kuhn / Tim Fricke
  */
 @WebServlet("/EmailServlet")
@@ -31,16 +31,14 @@ public class EmailServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		/**
-		 * Iban und Passwort aus der Form ziehen
+		 * Um die Email zu aendern muss das Passwort des Kontos eingegeben werden.
+		 * Hier wird dann ueberprueft, ob es mit dem Konto uebereinstimmt.
 		 */
 		String weiterleitung = "email.jsp";
 		HttpSession session = request.getSession();
 		byte[] passwort = request.getParameter("passwort").getBytes();
+		String error = "";
 		
-		/**
-		 * Im try block wird ueberprueft, ob iban und passwort mit denen des akutellen Kontos uebereinstimmen
-		 * um eine Weiterleitung auf die aufladen JSP zu erlauben.
-		 */
 		//Passwort verschluesseln, damit es mit dem Passwort in der Datenbank uebereinstimmt
 		passwort = Base64.getEncoder().encode(passwort);
 		String passwortencoded = new String(passwort);
@@ -56,8 +54,10 @@ public class EmailServlet extends HttpServlet {
 				session.setAttribute("aendern", true);
 				weiterleitung = "aendern.jsp";
 			} else {
-				System.out.println("Fehler");
+				error += "Das eigegebene Passwort stimmt nicht mit dem Ihres Kontos überein.";
 			}
+			
+		request.setAttribute("error", error);
 		request.getRequestDispatcher(weiterleitung).forward(request, response);
 	}
 }

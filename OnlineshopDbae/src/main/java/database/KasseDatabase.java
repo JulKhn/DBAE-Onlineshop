@@ -8,10 +8,22 @@ import java.util.ArrayList;
 import data.Ware;
 import data.Warenkorb;
 
+/**
+ * Klasse zum Kauf von Produkten
+ * @author Julian Kuhn / Tim Fricke
+ *
+ */
 public class KasseDatabase {
 	
 private static Connection con = null;
 	
+	/**
+	 * Bei dieser Methode wird die Menge eines bestimmten Produktes aktualisiert. Sollte ein Produkt in 
+	 * bestimmter Menge gekauft werden, so wird die vorraetige Menge des Produktes um die gekaufte Menge
+	 * reduziert.
+	 * @param warenkorb
+	 * @param warenKorb
+	 */
 	public static void mengeAktualisieren(Warenkorb warenkorb, ArrayList<Ware> warenKorb) {
 		
 		try {
@@ -35,6 +47,12 @@ private static Connection con = null;
 		}
 	}
 	
+	/**
+	 * Sollte ein Produkt nicht mehr vorhanden sein (Menge = 0) wird es mithilfe dieser Methode aus der
+	 * Datenbank geloescht.
+	 * @param warenkorb
+	 * @param warenKorb
+	 */
 	public static void produktEntfernen(Warenkorb warenkorb, ArrayList<Ware> warenKorb) {
 		
 		try {

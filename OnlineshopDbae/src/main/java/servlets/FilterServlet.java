@@ -25,33 +25,43 @@ public class FilterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		/**
+		 *In dieser Methode werden die Datenbankabfragen zu den Filteranfragen getaetigt.
+		 */
 		HttpSession session = request.getSession();
 		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu();
 		
+		/**
+		 *Sofern nach dem Namen gefiltert werden soll wird der Name aus der JSP gezogen und
+		 *in der DB nicht case sensitiv nach dem Namen gesucht.
+		 */
 		String name = request.getParameter("produktName");
 		if (!name.isEmpty()) {
 			prodListe = ProduktDatabase.produktName(name);
-			System.out.println("name: " + name);
 		}
 		
+		/**
+		 *Fuer die drei existierenden Kategorien wird die gewaehlte Kategorie
+		 *aus der JSP gezogen und in der Datenbank selektiert.
+		 */
 		String kategorie = request.getParameter("kategorie");
 		if (!kategorie.isEmpty()) {
 			prodListe = ProduktDatabase.produktKategorie(kategorie);
-			System.out.println("Kategorie: " + kategorie);
 		}
 		
+		/**
+		 *Um die aufgefuehrten Produkte zu sortieren wird je nach ausgewaehlter Sortierweise
+		 *in der JSP eine Methode zum Sortieren der DB Ausgabe aufgerufen.
+		 */
 		String sortierung = request.getParameter("sortieren");
 		if (!sortierung.isEmpty()) {
 			if (sortierung.equals("aufsteigend")) {
-				System.out.println("Sort 1");
 				prodListe = ProduktDatabase.produktPreisAuf();
 			} else if (sortierung.equals("absteigend")) {
-				System.out.println("Sort 2");
 				prodListe = ProduktDatabase.produktPreisAb();
 			}
 		}

@@ -40,18 +40,20 @@ public class KasseServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		/**
-		 * Warenkorb und Konto aus der Session holen
+		 * Warenkorb und Konto aus der Session holen, um den Inhalt des Warenkorbs und den Kontostand
+		 * ermitteln zu koennen.
 		 */
 		Warenkorb warenkorb = (Warenkorb) session.getAttribute("Warenkorb");
 		ArrayList<Ware> warenKorb = (ArrayList<Ware>) session.getAttribute("warenKorb");
 		Konto konto = (Konto) session.getAttribute("konto");
 		
+		//Summe der Produkte im Warenkorb aus der JSP ziehen
 		String summe = request.getParameter("kaufAbschluss");
 		double kontostand = konto.getKontostand();
 		double neuerKstand = 0.0;
 		String weiterleitung = "kasse.jsp";
 		
-		//Ueberpruefung ob genug Geld vorhanden ist
+		//Ueberpruefung, ob genug Geld auf dem Konto vorhanden ist, um die Produkte zu kaufen
 		boolean weiter = false;
 		if (kontostand - Double.parseDouble(summe) >= 0) {
 			neuerKstand = kontostand - Double.parseDouble(summe);
@@ -72,6 +74,8 @@ public class KasseServlet extends HttpServlet {
 			for (Ware w : warenKorb) {
 				w.getProdukt().setMenge(w.getProdukt().getMenge() - w.getMenge());
 				Date datum = new Date();
+				
+				//Die gekauften Produkte werden dem Bestellverlauf hinzugefuegt
 				KaufVerlaufDatabase.bestelltHinzu(kontoid, datum, w.getMenge(), w.getProdukt().getName(), w.getProdukt().getId());
 				KaufVerlaufDatabase.produktdatenHinzu(w.getProdukt().getId(), datum, w.getProdukt().getName());
 				if(w.getProdukt().getMenge() > 0) {
@@ -84,9 +88,11 @@ public class KasseServlet extends HttpServlet {
 			//neuen Kontostand des Kunden in die DB schreiben
 			GuthabenAufladenDatabase.kontostandAbziehen(kontoid, neuerKstand);
 			
+			//Produkte aus dem Warenkorb loeschen
 			warenkorb.getWarenkorb().clear();
 			warenKorb.clear();
 			
+			//Bestellverlauf aus der DB anfordern
 			ArrayList<Produkt> bestellungen = KaufVerlaufDatabase.kaufVerlauf(kontoid);
 			
 			session.setAttribute("bestelltListe", bestellungen);

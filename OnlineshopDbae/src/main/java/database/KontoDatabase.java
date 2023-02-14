@@ -8,6 +8,11 @@ import java.util.Base64;
 
 import data.Konto;
 
+/**
+ * Klasse zum erstellen eines Kontos
+ * @author Julian Kuhn / Tim Fricke
+ *
+ */
 public class KontoDatabase {
 
 private static Connection con = null;
@@ -68,35 +73,12 @@ private static Connection con = null;
 		return erfolg;
 	}
 	
-	public static Konto kontoLogin(String email) {
-		Konto konto = null;
-		
-		try {
-			
-			//E-Mail mit den E-Mails in der Datenbank ablgleichen
-			con = DatabaseConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM kundenkonto WHERE email = ?");
-			pstmt.setString(1, email);
-			ResultSet resultsetKonto = pstmt.executeQuery();
-
-			//Konto erstellen
-			while (resultsetKonto.next()) {
-				konto = new Konto(resultsetKonto.getString("vorname"), resultsetKonto.getString("nachname"), resultsetKonto.getString("email"), 
-						resultsetKonto.getString("geburtsdatum"), null, resultsetKonto.getString("iban"), resultsetKonto.getDouble("kontostand"));
-			}
-			
-		} catch (SQLException e){
-			System.out.println("SQLException cought -> Problem beim Einloggen " + e.toString());
-		} finally {
-			try {
-				con.close();
-		} catch (SQLException e) {
-			System.err.println("Verbindung geschlossen?" + e.toString());
-		}
-	}
-		return konto;
-	}
-	
+	/**
+	 * Bei dieser Methode wird das Passwort des Kontos anhand der Kontoid ermittelt.
+	 * @param konto
+	 * @param passwortencoded
+	 * @return Boolean
+	 */
 	public static boolean kontoPasswort(Konto konto, String passwortencoded) {
 		boolean erfolg = false;
 		
@@ -113,10 +95,7 @@ private static Connection con = null;
 			while (resultsetPW.next()) {
 				erfolg = true;
 				konto.setPasswort(resultsetPW.getString("passwort"));
-				
 			}
-			
-			
 		} catch (SQLException e){
 			System.out.println("SQLException cought -> Problem beim Einloggen " + e.toString());
 		} finally {
@@ -129,6 +108,11 @@ private static Connection con = null;
 		return erfolg;
 	}
 	
+	/**
+	 * Diese Methode selektiert anhand der Email alle Daten des angemeldeten Kontos aus der DB und speichert sie.
+	 * @param email
+	 * @return Liste der Daten des angemeldeten Kontos
+	 */
 	public static Konto getKonto(String email) {
 		Konto konto = null;
 		
@@ -158,6 +142,11 @@ private static Connection con = null;
 		return konto;
 	}
 	
+	/**
+	 * Ermittelt die Kontoid anhand der Email des Kontos.
+	 * @param email
+	 * @return Kontoid
+	 */
 	public static int getKontoId(String email) {
 		int kontoId = 0;
 		
@@ -185,6 +174,12 @@ private static Connection con = null;
 		return kontoId;
 	}
 	
+	/**
+	 * Diese Methode prueft bei der Registrierung eines neuen Kontos, ob die eingegebene
+	 * Email bereits vergeben ist.
+	 * @param email
+	 * @return boolean
+	 */
 	public static boolean emailVorhanden(String email) {
 		boolean erfolg = false;
 		
@@ -202,8 +197,13 @@ private static Connection con = null;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
-		
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.err.println("Verbindung geschlossen?" + e.toString());
+			}
+		}
 		return erfolg;
 	}
 }

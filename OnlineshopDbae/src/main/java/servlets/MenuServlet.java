@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.Konto;
 import data.Produkt;
 import data.Ware;
 import database.ProduktDatabase;
@@ -42,9 +41,7 @@ public class MenuServlet extends HttpServlet{
 		String produktid = request.getParameter("warenkorbHinzu");
 		String menge = request.getParameter("produktMenge");
 		session.setAttribute("menge", menge);
-		Konto konto = (Konto) session.getAttribute("konto");
 		boolean schonDa = false;
-		
 		
 		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu();
 		session.setAttribute("prodListe", prodListe);

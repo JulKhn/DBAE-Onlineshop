@@ -20,19 +20,18 @@ import database.GuthabenAufladenDatabase;
 @WebServlet("/GuthabenServlet")
 public class GuthabenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Connection con = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		/**
-		 * Iban und Passwort aus der Form ziehen
+		 * Um das Guthaben des Kontos aufzuladen muss der Nutzer Iban und Passwort des Kontos eingeben.
+		 * Diese Eingaben werden im Folgenden aus der JSP gezogen.
 		 */
 		String weiterleitung = "guthaben.jsp";
 		HttpSession session = request.getSession();
@@ -40,10 +39,7 @@ public class GuthabenServlet extends HttpServlet {
 		byte[] passwort = request.getParameter("passwort").getBytes();
 		String error = "";
 		
-		/**
-		 * Im try block wird ueberprueft, ob iban und passwort mit denen des akutellen Kontos uebereinstimmen
-		 * um eine Weiterleitung auf die aufladen JSP zu erlauben.
-		 */
+		
 		//Passwort verschluesseln, damit es mit dem Passwort in der Datenbank uebereinstimmt
 		passwort = Base64.getEncoder().encode(passwort);
 		String passwortencoded = new String(passwort);
@@ -51,6 +47,7 @@ public class GuthabenServlet extends HttpServlet {
 		//kontoid mit dem Passwort herausfinden
 		int kontoid = GuthabenAufladenDatabase.getKontoId(passwortencoded);
 		
+		//wird eine Kontoid gefunden, so faehrt das Programm fort
 		boolean weiter = true;
 		if (kontoid == 0) {
 			weiter = false;
@@ -63,7 +60,7 @@ public class GuthabenServlet extends HttpServlet {
 			//IBAN des Kontos herausfinden und mit der eingegebenen IBAN abgleichen
 			String iban2 = GuthabenAufladenDatabase.getIban(kontoid);
 				
-			//ist die IBAN gleich der eingegebenen IBAN wird der Konto auf die aufladen JSP weitergeleitet
+			//ist die IBAN das Kontos gleich der eingegebenen IBAN wird das Konto auf die aufladen JSP weitergeleitet
 			if(iban2.equals(iban)) {
 				session.setAttribute("aufladen", true);
 				weiterleitung = "aufladen.jsp";
@@ -72,6 +69,7 @@ public class GuthabenServlet extends HttpServlet {
 			}
 		}
 		
+		request.setAttribute("error", error);
 		request.getRequestDispatcher(weiterleitung).forward(request, response);
 	}
 }

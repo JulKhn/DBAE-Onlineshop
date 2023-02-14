@@ -1,17 +1,12 @@
 package servlets;
 import database.KontoDatabase;
 import database.ProduktDatabase;
-import database.DatabaseConnection;
 import data.Konto;
 import data.Produkt;
 import data.Ware;
 import data.Warenkorb;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -44,7 +39,6 @@ public class LoginServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/**
@@ -67,7 +61,6 @@ public class LoginServlet extends HttpServlet {
 			weiter = true;
 		}
 
-		
 		ArrayList<Produkt> prodListe = ProduktDatabase.produktMenu();
 		session.setAttribute("prodListe", prodListe);
 		
@@ -109,10 +102,6 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("loginbool", loginbool);
 			}
 
-			
-		
-		
 		request.getRequestDispatcher(weiterleitung).forward(request, response);
 	}
 }
-

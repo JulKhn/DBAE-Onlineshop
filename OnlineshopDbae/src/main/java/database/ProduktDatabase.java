@@ -9,10 +9,20 @@ import java.util.Base64;
 
 import data.Produkt;
 
+/**
+ * Klasse zur Interaktion mit der Produkt Database
+ * @author Julian Kuhn / Tim Fricke
+ *
+ */
 public class ProduktDatabase {
 	
 	private static Connection con = null;
 
+	/**
+	 * Diese Methode selektiert alle existierenden Produkte aus der Datenbank
+	 * und sendet sie an das Servlet.
+	 * @return Arraylist mit Produkten
+	 */
 	public static ArrayList<Produkt> produktMenu() {
 		
 		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
@@ -45,32 +55,12 @@ public class ProduktDatabase {
 		return produkte;
 	}
 	
-	public static String produktBild(int produktid) {
-		String base64Image = "";
-		
-		try {
-			con = DatabaseConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("SELECT bild FROM produkt WHERE produktid = ?");
-            pstmt.setInt(1, produktid);
-            ResultSet resultset = pstmt.executeQuery();
-                    
-            while (resultset.next()) {
-            base64Image = Base64.getEncoder().encodeToString(resultset.getBytes("bild"));
-            }   
-			
-		} catch (SQLException e){
-			System.out.println("SQLException cought -> " + e.toString());
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				System.err.println("Verbindung geschlossen?" + e.toString());
-			}
-		}
-		
-		return base64Image;
-	}
-	
+	/**
+	 * Selektiert alle Produkte einer bestimmten Kategorie aus der Datenbank, um
+	 * die Produkte zu filtern.
+	 * @param kategorie
+	 * @return Arraylist mit Produkten
+	 */
 	public static ArrayList<Produkt> produktKategorie(String kategorie) {
 		
 		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
@@ -104,6 +94,10 @@ public class ProduktDatabase {
 		return produkte;
 	}
 	
+	/**
+	 * Sortiert alle Produkte aus der DB aufsteigend nach dem Preis
+	 * @return Arraylist mit Produkten
+	 */
 	public static ArrayList<Produkt> produktPreisAuf() {
 		
 		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
@@ -136,6 +130,10 @@ public class ProduktDatabase {
 		return produkte;
 	}
 	
+	/**
+	 * Sortiert alle Produkte aus der DB absteigend nach dem Preis
+	 * @return Arraylist mit Produkten
+	 */
 	public static ArrayList<Produkt> produktPreisAb() {
 		
 		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
@@ -168,6 +166,11 @@ public class ProduktDatabase {
 		return produkte;
 	}
 	
+	/**
+	 * Selektiert alle Produkte aus der DB, welche dem eingegebene Namen entsprechen. 
+	 * (nicht case sensitiv)
+	 * @return Arraylist mit Produkten
+	 */
 	public static ArrayList<Produkt> produktName(String prodname) {
 		
 		ArrayList<Produkt> produkte = new ArrayList<Produkt>();

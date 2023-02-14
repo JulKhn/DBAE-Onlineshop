@@ -12,7 +12,7 @@
 <div align="center">
 <h1>Guthaben aufladen:</h1>
 
-<!-- Der Benutzer muss IBAN und Passwort fuer die Validierung eingeben -->
+<!-- Der Nutzer muss IBAN und Passwort fuer die Validierung eingeben -->
 Bitte geben Sie ihre IBAN und Ihr Passwort ein:
 <br />
 <form method="POST" action="GuthabenServlet">

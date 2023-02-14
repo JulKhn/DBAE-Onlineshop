@@ -1,10 +1,20 @@
 package data;
 
+/**
+ * Ware Objekt
+ * @author Julian Kuhn / Tim Fricke
+ *
+ */
 public class Ware {
 
 	private Produkt produkt;
 	private int menge;
 	
+	/**
+	 * Ware Konstruktor
+	 * @param produkt
+	 * @param menge
+	 */
 	public Ware(Produkt produkt, int menge) {
 		this.produkt = produkt;
 		this.menge = menge;

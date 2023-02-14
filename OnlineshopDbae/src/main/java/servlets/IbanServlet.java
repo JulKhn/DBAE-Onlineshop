@@ -29,6 +29,10 @@ public class IbanServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 		
+		/**
+		 *Um die IBAN zu aendern muss der Nutzer eine gueltige IBAN eingeben.
+		 *Im Folgenden wird die Eingabe aus der JSP angefordert und ueberprueft.
+		 */
 		HttpSession session = request.getSession();
 		String iban = request.getParameter("iban");
 		Konto konto = (Konto) session.getAttribute("konto");
@@ -37,6 +41,7 @@ public class IbanServlet extends HttpServlet {
 		
 		if (Pattern.matches("^DE[0-9]{20}$", iban)) {
 			
+			//Sofern alle Eingaben korrekt waren und die neue IBAN einzigartig ist, wird die IBAN des Kontos geaendert.
 			System.out.println("Kontoid: " + konto.getId());
 			erfolg = IbanAendernDatabase.ibanAendern(konto.getId(), iban);
 			if (erfolg) {
