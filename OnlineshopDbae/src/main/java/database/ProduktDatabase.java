@@ -175,13 +175,10 @@ public class ProduktDatabase {
 		
 		ArrayList<Produkt> produkte = new ArrayList<Produkt>();
 		
-		System.out.println("prodname DB: " + prodname);
-		
 		try {
 			con = DatabaseConnection.getConnection();
 			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM produkt WHERE LOWER(name) LIKE LOWER(?)");
 			pstmt.setString(1, "%" + prodname + "%");
-			System.out.println("Statement: " + pstmt);
 			ResultSet resultset = pstmt.executeQuery();
 			
 			while (resultset.next()) {

@@ -1,6 +1,5 @@
 package servlets;
 
-import database.IbanAendernDatabase;
 import database.KontoDatabase;
 import logik.Validierung;
 import data.Konto;

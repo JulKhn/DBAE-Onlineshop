@@ -42,7 +42,6 @@ public class IbanServlet extends HttpServlet {
 		if (Pattern.matches("^DE[0-9]{20}$", iban)) {
 			
 			//Sofern alle Eingaben korrekt waren und die neue IBAN einzigartig ist, wird die IBAN des Kontos geaendert.
-			System.out.println("Kontoid: " + konto.getId());
 			erfolg = IbanAendernDatabase.ibanAendern(konto.getId(), iban);
 			if (erfolg) {
 				error = "Die Iban wurde erfolgreich geändert!";

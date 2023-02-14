@@ -47,7 +47,6 @@ public class AendernServlet extends HttpServlet {
 		
 		//SQL eingabe fuer das Update der Email des Kontos
 		erfolg = EmailAendernDatabase.emailAktualisieren(kontoid, email);
-		System.out.println("Erfolg? " + erfolg);
 		if (erfolg) {
 			error = "Die E-Mail wurde erfolgreich geändert!";
 			String neueEmail = EmailAendernDatabase.getEmail(kontoid);
